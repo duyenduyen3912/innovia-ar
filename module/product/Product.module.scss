@@ -1,0 +1,100 @@
+.product{
+    padding: 71px 18.33333%;
+    
+
+    .sort{
+        display: flex;
+        justify-content: space-between;
+        .product-number{
+            font-size: 16px;
+            color: var(--textColor);
+            font-weight: 500;
+        }
+    }
+
+    .filter-price{
+        font-size: 20px;
+        color: var(--textColor);
+        font-weight: 500;
+        margin-bottom: 13px;
+    }
+
+    .price-range-wrap{
+        
+        align-items: center;
+        margin-top: 20px;
+        .price-range{
+            margin-right: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #5a5a5a;
+        }
+        .price-range-btn{
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn{
+            padding: 3px 31px;
+            background-color: var(--secondary);
+            border-color: transparent;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+          
+        }
+        .btn-reset{
+            background-color: var(--primary);
+         
+        }
+    }
+
+    .product-category{
+        margin-top: 30px;
+        .category-item{
+            cursor: pointer;
+            color: var(--descriptionTextColor);
+            font-size: 15px;
+            margin: 10px 0;
+            &:hover {
+                color: var(--textColor);
+            }
+        }
+    }
+
+    .product-search{
+        margin-top: 30px;
+        .search-input{
+            border: 2px dotted var(--secondary);
+            padding: 10px;
+        }
+    }
+    
+}
+
+.row-product{
+    flex-wrap: wrap;
+    .notifications{
+        text-align: center;
+        font-size: 18px;
+        color: var(--descriptionTextColor);
+    }
+    .pagination {
+        width: 100%;
+        margin-top: 20px;
+        text-align: center;
+        
+    }
+
+    
+}
+
+.btn{
+  border: 1px solid #e7e7e7;
+  padding: 18px 30px;
+  height: 100%;
+  color: #fff;
+  background-color: var(--primary);
+  font-weight: 500;
+ 
+}

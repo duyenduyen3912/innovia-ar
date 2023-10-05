@@ -1,0 +1,99 @@
+.homepage{
+    overflow: hidden;
+    padding: 0 2.5rem;
+}
+
+.carousel-wrap{
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel{
+    position: relative;
+    // min-height: 100vh;
+    overflow: hidden;
+}
+
+
+.item-wrap{
+    // position: relative;
+}
+
+.block {
+    position: relative;
+}
+
+.image-carousel{
+    
+    width: 100%;
+    height: auto;
+}
+
+
+
+.logo-wrap{
+    text-align: center;
+}
+
+.logo{
+    width: 2%;
+    height: auto;
+}
+
+.title-wrap{
+    text-align: center;
+}
+
+.title{
+    font-size: 50px;
+    font-weight: 500;
+    color:  #5a5a5a;
+}
+
+.hight-rate-menu{
+    padding: 0 18.333%;
+}
+
+.food{
+    margin-top: 80px;
+}
+.product-wrap{
+
+}
+
+.favourite-menu{
+    position: relative;
+    .pink-straw{
+        position: absolute;
+        width: 18%;
+        height: auto;
+        object-fit: cover;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+    }
+    
+    .blueberry{
+        position: absolute;
+        width: 35%;
+        top: 0;
+        right: 0;
+        height: auto;
+        object-fit: cover;
+        z-index: 1;
+    }
+    
+}
+
+@media only screen and (max-width : 992px) {
+    .hight-rate-menu{
+        padding: 0 0%;
+    }
+}
+
+@media only screen and (max-width : 480px) {
+    .hight-rate-menu{
+        padding: 0 18.3333333%;
+    }
+}
+

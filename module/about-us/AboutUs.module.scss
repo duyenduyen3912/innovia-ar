@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Kavoon&family=League+Spartan:wght@400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Sacramento&display=swap');
+
+.about-us{
+    .about-product{
+        padding: 71px 0;
+        background-image: url("../../assets/imgs/about-product-bg.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
+        .about-product-img{
+            position: absolute;
+            
+            
+        }
+        .about-product-row{
+            width: 100%;
+        }
+        .product-wrap{
+            padding: 45px 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        .product-item{
+            .product-title{
+                font-size: 30px;
+                font-weight: 500;
+                color: var(--textColor);
+            }
+            .product-description{
+                margin-top: 14px;
+                font-size: 15px;
+                color: var(--descriptionTextColor);
+            }
+        }
+        .juice{
+            text-align: end;
+        }
+        .food{
+            text-align: start;
+        }
+    }
+
+    .about-logo{
+        height: 400px;
+        padding: 95px 40px;
+        background-image: url("../../assets/imgs/logo-bg.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        .about-logo-wrap{
+            display: flex;
+            align-items: center;
+            object-fit: cover;
+            .logo-img{
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+
+    .about-says{
+        padding: 71px 18.3333%;
+        .says-title{
+            margin-top: 20px;
+            text-align: center;
+            font-size: 40px;
+            font-weight: 500;
+            color: var(--textColor);
+        }
+
+        .says-text{
+            padding: 32px 10%;
+            text-align: center;
+            font-size: 28px;
+            color: var(--descriptionTextColor);
+            font-family: 'Sacramento' !important;
+        }
+        .says-author{
+            text-align: center;
+            font-weight: 500;
+            font-size: 20px;
+            color: var(--textColor);
+        }
+        .says-job{
+            margin-bottom: 50px;
+            text-align: center;
+            font-size: 15px;
+            color: var(--descriptionTextColor);
+        }
+    }
+
+}

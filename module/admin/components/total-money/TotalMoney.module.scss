@@ -1,0 +1,19 @@
+.total-money{
+    padding: 30px ;
+    background-image: url('../../../../assets/imgs/total-money-bg.png');
+    text-align: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    .header{
+        font-size:18px;
+        font-weight: 500;
+        color: #fff;
+    }
+
+    .money{
+        font-size: 17px;
+        font-weight: 600;
+        color: #fff;
+    }
+}

@@ -1,0 +1,15 @@
+.order-btn{
+    border: 1px solid #e7e7e7;
+   
+    padding: 18px 30px;
+    height: 100%;
+    color: #fff;
+    background-color: var(--primary);
+    font-weight: 500;
+    &:hover{
+        color: #fff !important;
+        border-color: transparent !important;
+        background-color: var(--secondary);
+
+    }
+}
