@@ -40,6 +40,33 @@ function Header() {
         
     }
     useEffect(()=> {
+        function handleScroll() {
+            var header = document.getElementById('header');
+            var text = document.getElementsByClassName(cx('menu-item-link'))
+            
+            if (window.scrollY > 50) {
+                header.classList.add(cx("scrolled"));
+                for(let i = 0; i < text.length; i++){
+                    text[i].classList.add(cx('scrolled-color'))
+                }
+                document.getElementById('search').classList.add(cx('scrolled-color'))
+                document.getElementById('cart').classList.add(cx('scrolled-color'))
+                console.log(document.getElementById('search'))
+            } else {
+                header.classList.remove(cx("scrolled"));
+                for(let i = 0; i < text.length; i++){
+                    text[i].classList.remove(cx('scrolled-color'))
+                }
+                document.getElementById('search').classList.remove(cx('scrolled-color'))
+                document.getElementById('cart').classList.remove(cx('scrolled-color'))
+            }
+        }
+     
+        window.addEventListener('scroll', handleScroll);
+       
+    },[])
+    
+    useEffect(()=> {
         if(cart?.status === "success") {
             const totalQuantity = cart?.data.reduce((sum,item)=>{
                 return sum + parseInt(item.total_quantity,10) 
@@ -51,11 +78,11 @@ function Header() {
     return (
         <>
         
-        <div className={cx("header")}>
+        <div className={cx("header")} id="header">
             <Row className={cx("header-wrap")}>
                 <Col  xs={0} sm={0} md={0} lg={0} xl={10} xxl={10} className={cx("left")}>
                     <li className={cx("menu-item", "logo")}>
-                        <Image src={require("../../assets/imgs/Fooce.png")} width={100} alt="logo" />
+                        <Image src={require("../../assets/imgs/innovia-logo2.png")} width={100} alt="logo" />
                     </li>
                     <li className={cx("menu-item")} >
                         <Link href={"/"} className={cx("menu-item-link")} tabIndex= {0}>
@@ -115,17 +142,17 @@ function Header() {
                     }
                     
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xl={7} xxl={7} className={cx("right")}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={7} xxl={4} className={cx("right")}>
                 <li className={cx("menu-item", "search")}>
                     <div className={cx("search-wrap")}>
-                        <SearchOutlined style={{ fontSize: '18px', color: '#FBBCC0', fontWeight: '600' }}/>
-                        <input type = "text" placeholder="Search here ..." className={cx("search-input")}/>
+                        <SearchOutlined className={cx("search-icon")} id="search" />
+                        
                     </div>
                 </li>
                 <li className={cx("menu-item", "icon", "cart")}>
                     <div style={{position: 'relative', minWidth: '35px'}}>
                         <Link href={"/cart"}>
-                        <ShoppingCartOutlined style={{ fontSize: '24px', color: '#FBBCC0', fontWeight: '600', width: '10%', minWidth: '24px' }}/>
+                        <ShoppingCartOutlined className={cx("cart-icon")} id="cart"/>
                         <span className={cx('quantity')}>{totalQuantity}</span>
                     </Link>
                     </div>
@@ -147,14 +174,14 @@ function Header() {
                         </li>
                         <li className={cx('user-menu-item')}>
                             <Link href={'/login'} className={cx('item-link')} onClick={onHandleLogout}>
-                                Logout
+                                Logout  
                             </Link>
                         </li>
                        
                     </div> 
                     </div>
                     :
-                    <li className={cx("menu-item")}>
+                    <li className={cx("menu-item", "user-responsive")}>
                         <Link href={"/login"} className={cx("menu-item-link")} tabIndex= {0}>
                             Login
                         </Link>
@@ -164,8 +191,8 @@ function Header() {
                     <li className={cx("menu-item", "list-responsive")} onClick={handleOpenMenu}>
                         {
                             isOpen ?
-                             <CloseOutlined style={{ fontSize: '24px', color: '#FBBCC0', fontWeight: '600', cursor: 'pointer' }}/>
-                            : <MenuOutlined style={{ fontSize: '24px', color: '#FBBCC0', fontWeight: '600', cursor: 'pointer' }}/>
+                             <CloseOutlined style={{ fontSize: '24px', color: '#a58838', fontWeight: '600', cursor: 'pointer' }}/>
+                            : <MenuOutlined style={{ fontSize: '24px', color: '#a58838', fontWeight: '600', cursor: 'pointer' }}/>
                         }
                     </li>
                
@@ -210,7 +237,7 @@ function Header() {
              </li>
              <li className={cx('menu-responsive-item')}>
                      <Link href={'/login'} className={cx('item-link')} onClick={onHandleLogout}>
-                         Logout
+                         {ApiUser.isLogin() ? "Logout" : "Login"}
                      </Link>
              </li>
              

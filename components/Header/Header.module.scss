@@ -3,11 +3,20 @@
     position: fixed;
     top: 0;
     z-index: 100;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    
+}
+
+.header.scrolled{
+    background-color: #fff;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .header-wrap{
+    margin: 0 100px;
     justify-content: space-between;
-    background-color: #fff;
+    
 }
 
 .left{
@@ -16,26 +25,26 @@
     
     
     .logo{
-        transform: translateY(2px);
+        transform: translateY(-6px);
     }
     
 }
 
 .menu-item{
     list-style: none;
-    padding: 22px 0;
+    padding: 20px 0 10px 0;
 }
 
 .menu-item-link{
     position: relative;
-    color: #5a5a5a;
+    color: #ffffff;
     padding: 4px 0;
     font-size: 16px;
     font-weight: 500;
     border-bottom: 1px dashed transparents;
     border-bottom: none;
     &:hover {
-        color: #5a5a5a;
+        color: var(--secondary);
     }
     &::after{
         position: absolute;
@@ -45,7 +54,7 @@
         bottom: -5px;
         left: auto;
         right: 0;
-        border-bottom: 1px dashed #5a5a5a;
+        border-bottom: 1px dashed var(--secondary);
         transition: width .3s ease-in-out;
     }
     &:focus::after, &:hover::after{
@@ -56,22 +65,26 @@
 }
 
 
+
 .right{
     display: flex;
     justify-content: space-around;
     .search-wrap{
-        .search-input{
-            flex: 8;
-            width: 80%;
-            min-width: 200px;
-            font-size: 15px;
-            border: none;
-            outline: none;
-            margin-left: 8px;
-            padding-bottom: 4px;
-        }  
+        .search-icon{
+            font-size: 18px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 22px;
+            transform: translateY(2px);
+        }
     }
-    
+    .cart-icon{
+        font-size: 24px;
+        color: #ffffff ;
+        font-weight: 600;
+        width: 10%;
+        min-width: 24px;
+    }
     .search-input:focus{
         border-bottom: 1px dashed #5a5a5a;
     }
@@ -101,6 +114,9 @@
 
 }
 
+.scrolled-color {
+    color: var(--primary) !important;
+}
 
 .user{
 

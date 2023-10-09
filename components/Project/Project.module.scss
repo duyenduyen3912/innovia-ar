@@ -1,0 +1,16 @@
+.project{
+    cursor: pointer;
+    overflow: hidden;
+    &:hover {
+        .img{
+            transform: scale(100%);
+            transition: ease-in 0.2s;
+        }
+    }
+    &:not(hover) {
+        .img{
+            transform: scale(110%);
+            transition: ease-in 0.2s;
+        }
+    }
+}
