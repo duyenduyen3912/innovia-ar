@@ -7,8 +7,7 @@
 
 .img-wrap{
     width: 100%;
-    height: 315px;
-    border-radius: 4px;
+    height: 179px;
     overflow: hidden;
     cursor: pointer;
     position: relative;
@@ -17,7 +16,6 @@
 .img-wrap > div:first-child {
     width: 100%;
     height: 100% ;
-    object-fit: cover;
 }
 
 .img{
@@ -63,35 +61,43 @@
 
 .product-name{
     height: 26px;
-    margin-top: 34px;
+    margin-top: 20px;
     padding: 0 10px;
     font-size: 20px;
+    font-weight: 500;
     color: #5a5a5a;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
     &:hover{
-        color: #fbbcc0;
+        color: var(--secondary);
         transition: ease 0.4s;
     }
 }
 
 .product-star{
-    margin-top: 14px;
+    
 }
 
 .product-price{
     color: #5a5a5a;
-    margin-top: 14px;
+    margin-top: 8px;
     .product-icon{
         font-size: 15px;
+    }
+
+    .product-text{
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--secondary);
     }
 
     .price{
         margin-left: 8px;
         font-size: 15px;
-        font-weight: 500;
+        font-weight: 600;
+        color: var(--secondary);
     }
 }
 

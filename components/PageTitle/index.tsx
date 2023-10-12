@@ -8,7 +8,7 @@ const cx = classNames.bind(style)
 export default function PageTitle(prop) {
   return (
     <div className={cx("page-title")}>
-        <Image src={require("../../assets/imgs/title-bg.png").default.src} alt="title-background" className={cx("image")} preview={false}/>
+        <Image src={require("../../assets/imgs/page-bg.png").default.src} alt="title-background" className={cx("image")} preview={false}/>
         <div className={cx("title")}>
             {prop.name}
         </div>

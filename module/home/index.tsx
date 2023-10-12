@@ -1,18 +1,14 @@
 import { Carousel, Col, Row, Image } from "antd";
 import classNames from "classnames/bind";
 import style from "./Home.module.scss"
-import 'animate.css'
+import 'animate.css';
 import { useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import Product from "../../components/product";
-import MenuType from "../../components/Menu";
-import image from "../../constant/img/image";
 import { useQuery } from "react-query";
 import { getAllProduct, getProductInCart } from "../../api/ApiProduct";
-import Loading from "../../components/loading";
-import ApiUser from "../../api/ApiUser";
 import Card from "../../components/Card";
 import Project from "../../components/Project";
+import { TrophyOutlined } from "@ant-design/icons";
+
 
 const cx = classNames.bind(style)  
 
@@ -127,6 +123,35 @@ function Homepage() {
                     <Project src="p-living"/>
                 </Col>
             </Row>
+        </div>
+        <div className={cx("about-us")}>
+            <p className={cx("service-title")}>VỀ <span className={cx("text-highlight")}>CHÚNG TÔI</span> </p>
+            <p className={cx("service-description")}>Đội ngũ thiết kế dày dặn kinh nghiệm luôn mang tới trải nghiệm tốt 
+                nhất cho khách hàng.
+            </p>
+            <Row gutter={30} style={{marginTop: "50px", marginBottom: "50px"}}>
+                <Col className={cx("item-col", "border")} span={6}>
+                        <span className={cx("item-number")}>20</span>
+                        <TrophyOutlined className={cx("item-icon")}/>
+                        <div className={cx("item-name")}>GIẢI THƯỞNG</div>
+                </Col>
+                <Col className={cx("item-col", "border")} span={6}>
+                        <span className={cx("item-number")}>2K</span>
+                        <TrophyOutlined className={cx("item-icon")}/>
+                        <div className={cx("item-name")}>SẢN PHẨM</div>
+                </Col>
+                <Col className={cx("item-col", "border")} span={6}>
+                        <span className={cx("item-number")}>432</span>
+                        <TrophyOutlined className={cx("item-icon")}/>
+                        <div className={cx("item-name")}>KHÁCH HÀNG</div>
+                </Col>
+                <Col className={cx("item-col")} span={6}>
+                        <span className={cx("item-number")}>12</span>
+                        <TrophyOutlined className={cx("item-icon")}/>
+                        <div className={cx("item-name")}>KỸ SƯ</div>
+                </Col>
+            </Row>
+            
         </div>
        </div>
        

@@ -102,17 +102,16 @@
         font-size: 11px;
         font-weight: 500;
     }
-    .user-icon{
-        position: relative;
-        font-size: 24px;
-        color: var(--primary);
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    
-
 }
+
+.user-icon{
+    position: relative;
+    font-size: 24px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 
 .scrolled-color {
     color: var(--primary) !important;
@@ -158,8 +157,7 @@
         .item-link{
             font-size: 15px;
             &:hover{
-                
-               color: var(--primary); 
+               color: var(--secondary); 
             }
         }
         &:hover{

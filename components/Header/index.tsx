@@ -1,8 +1,7 @@
 import { HomeOutlined, SearchOutlined, HeartOutlined, BookOutlined, ShoppingCartOutlined, UserOutlined, MenuOutlined, CloseOutlined } from "@ant-design/icons";
-import { Col, Menu, Row } from "antd";
+import { Col, Menu, Row, Image} from "antd";
 import style from "./Header.module.scss"
 import classNames from "classnames/bind";
-import Image from "next/image";
 import Link from "next/link";
 import 'animate.css';
 import { useDispatch } from "react-redux";
@@ -17,6 +16,7 @@ const cx = classNames.bind(style)
 
 function Header() {
     const router = useRouter()
+    const path = router.pathname
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false)
     const [totalQuantity, setTotalQuantity] = useState(0)
@@ -51,6 +51,7 @@ function Header() {
                 }
                 document.getElementById('search').classList.add(cx('scrolled-color'))
                 document.getElementById('cart').classList.add(cx('scrolled-color'))
+                document.getElementById('user').classList.add(cx('scrolled-color'))
                 console.log(document.getElementById('search'))
             } else {
                 header.classList.remove(cx("scrolled"));
@@ -59,10 +60,12 @@ function Header() {
                 }
                 document.getElementById('search').classList.remove(cx('scrolled-color'))
                 document.getElementById('cart').classList.remove(cx('scrolled-color'))
+                document.getElementById('user').classList.remove(cx('scrolled-color'))
             }
         }
-     
-        window.addEventListener('scroll', handleScroll);
+      
+       
+        
        
     },[])
     
@@ -82,33 +85,24 @@ function Header() {
             <Row className={cx("header-wrap")}>
                 <Col  xs={0} sm={0} md={0} lg={0} xl={10} xxl={10} className={cx("left")}>
                     <li className={cx("menu-item", "logo")}>
-                        <Image src={require("../../assets/imgs/innovia-logo2.png")} width={100} alt="logo" />
+                        <Image src={require("../../assets/imgs/innovia-logo2.png").default.src} preview={false} width={100} alt="logo" />
                     </li>
                     <li className={cx("menu-item")} >
                         <Link href={"/"} className={cx("menu-item-link")} tabIndex= {0}>
-                            Home
+                            Trang chủ
                         </Link>
                     </li>
                     <li className={cx("menu-item")}>
-                        <Link href={"/our-menu"} className={cx("menu-item-link")} tabIndex= {0}>
-                            Menu
+                        <Link href={"/design"} className={cx("menu-item-link")} tabIndex= {0}>
+                            Thiết kế
                         </Link>
                     </li>
                     <li className={cx("menu-item")}>
-                        <Link href={"/food"} className={cx("menu-item-link")} tabIndex= {0}>
-                            Food
+                        <Link href={"/list-product"} className={cx("menu-item-link")} tabIndex= {0}>
+                            Sản phẩm
                         </Link>
                     </li>
-                    <li className={cx("menu-item")}>
-                        <Link href={"/juice"} className={cx("menu-item-link")} tabIndex= {0}>
-                            Juice
-                        </Link>
-                    </li>
-                    <li className={cx("menu-item")}>
-                        <Link href={"/about-us"} className={cx("menu-item-link")} tabIndex= {0}>
-                            About us
-                        </Link>
-                    </li>
+                   
                     { ApiAdmin.getRoleAdmin() === "1" ? 
                     <>
                    
@@ -163,7 +157,7 @@ function Header() {
                     <div className={`${cx('user', "user-responsive")}`}>
                     <li className={cx("menu-item")}>
                        
-                           <UserOutlined className={cx('user-icon')} />
+                           <UserOutlined className={cx('user-icon')} id="user"/>
                            
                    </li>
                     <div className={`animate__zoomIn ${cx('user-menu')}`}>
@@ -205,30 +199,21 @@ function Header() {
          <div className={cx('menu')}>
              <li className={cx('menu-responsive-item')}>
                  <Link href={'/'} className={cx('menu-responsive-link')}>
-                     Home
+                     Trang chủ
                  </Link>
              </li>
              <li className={cx('menu-responsive-item')}>
-                 <Link href={'/our-menu'} className={cx('menu-responsive-link')}>
-                     Menu
+                 <Link href={'/design'} className={cx('menu-responsive-link')}>
+                     Thiết kế
                  </Link>
              </li>
              <li className={cx('menu-responsive-item')}>
-                 <Link href={'/food'} className={cx('menu-responsive-link')}>
-                     Food
+                 <Link href={'/list-product'} className={cx('menu-responsive-link')}>
+                    Sản phẩm
                  </Link>
 
              </li>
-             <li className={cx('menu-responsive-item')}>
-                 <Link href={'/juice'} className={cx('menu-responsive-link')}>
-                     Juice
-                 </Link>
-             </li>
-             <li className={cx('menu-responsive-item')}>
-                 <Link href={'/about-us'} className={cx('menu-responsive-link')}>
-                     About us
-                 </Link>
-             </li>
+             
              
              <li className={cx('menu-responsive-item')}>
                  <Link href={'/my-account'} className={cx('menu-responsive-link')}>

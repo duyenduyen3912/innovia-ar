@@ -1,0 +1,23 @@
+.design{
+    padding: 0 20%;
+}
+
+.tabs{
+    width: 100%;
+
+    
+
+    background-color: transparent;
+  
+    font-size: 20px;
+    justify-content: space-between;
+    .tab-header {
+        font-size: 30px;
+        font-weight: 600;
+        color: #fff;
+        
+    }
+    .tab-header.ant-tabs-tab-active{
+        color: var(--secondary);
+    }
+}

@@ -16,13 +16,15 @@
         font-size: 20px;
         color: var(--textColor);
         font-weight: 500;
+        margin-top: 30px;
         margin-bottom: 13px;
     }
 
     .price-range-wrap{
-        
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        margin-top: 20px;
+        margin-top: 10px;
         .price-range{
             margin-right: 8px;
             font-size: 16px;
@@ -41,6 +43,7 @@
             color: #fff;
             font-size: 15px;
             font-weight: 500;
+            transform: translateY(-8px);
           
         }
         .btn-reset{
@@ -63,10 +66,43 @@
     }
 
     .product-search{
-        margin-top: 30px;
         .search-input{
             border: 2px dotted var(--secondary);
             padding: 10px;
+        }
+    }
+
+    .product-rcm{
+        margin-top: 30px;
+        .product-item{
+            display: flex;
+            padding: 20px 0;
+            border-bottom: 1px solid #e0e0e0;
+            
+        }
+        .product-img{
+            width: 80px;
+            height: 50px;
+            object-fit: cover;
+        }
+        .product-detail{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 18px;
+            margin-left: 20px;
+        }
+        .product-name{
+            color: var(--textColor);
+            cursor: pointer;
+            &:hover{
+                color: var(--secondary);
+            }
+        }
+        .product-price{
+            color: var(--secondary);
+            font-size: 14px;
+            font-weight: 500;
         }
     }
     

@@ -62,7 +62,7 @@ export default function Product(props) {
                 type='primary' 
                 className={`animate__animated animate__bounceIn ${cx("btn")}`}
                 onClick={onHandleAddtocart}  
-                >add to cart</Button>
+                >Thêm vào giỏ </Button>
             </div>
           </div>
           <Link href={`/product/${props.id}`}>
@@ -73,8 +73,9 @@ export default function Product(props) {
             <Rate allowHalf disabled value={Math.round(props.star * 2) / 2} style={{ color: '#fbbcc0', fontSize: '15px' }} />
           </div>
           <div className={cx("product-price")}>
-            <DollarOutlined style={{ fontSize: '15px', color: '#5a5a5a', fontWeight: '500' }} />
-            <span className={cx("price")}>{props.price ? formatCurrency(props.price) : ''}</span>
+            <span className={cx("product-text")}>Giá:</span>
+            {/* <DollarOutlined style={{ fontSize: '15px', color: '#5a5a5a', fontWeight: '500' }} /> */}
+            <span className={cx("price")}>{props.price ? formatCurrency(props.price) : ''} VNĐ</span>
           </div>
         </div>
 
