@@ -1,6 +1,22 @@
+.gallery{
+    overflow: hidden;
+    &:hover {
+        .img{
+            transform: scale(100%);
+            transition: ease-in 0.2s;
+        }
+    }
+    &:not(hover) {
+        .img{
+            transform: scale(110%);
+            transition: ease-in 0.2s;
+        }
+    }
+}
+
 .img{
     width: 100%;
-    height: 100%;
+    height: 184px !important;
     object-fit: cover;
 }
 

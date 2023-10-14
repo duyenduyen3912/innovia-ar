@@ -1,5 +1,5 @@
 import React from 'react'
-import Menu from '../../module/menu'
+import Menu from '../../module/gallery'
 
 export default function index(): JSX.Element {
   return (

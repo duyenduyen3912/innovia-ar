@@ -32,7 +32,11 @@ a {
 }
 
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .ant-pagination .ant-pagination-item-active > a {
-    color: var(--primary);
+    color: var(--secondary);
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  color: var(--secondary);
 }
 
 .ant-pagination .ant-pagination-item-active > a {

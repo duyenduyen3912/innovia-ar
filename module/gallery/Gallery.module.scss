@@ -1,0 +1,29 @@
+.design{
+    padding: 0 20%;
+    margin-top: 30px;
+}
+
+.gallery-item{
+    margin: 14px 0;
+}
+
+.tabs{
+    width: 100%;
+    background-color: transparent;
+    font-size: 20px;
+    display: flex;
+    .tab-header {
+        font-size: 18px;
+        font-weight: 500;  
+    }
+    .tab-header.ant-tabs-nav-wrap{
+        justify-content: center;
+    }
+    .tab-header.ant-tabs-tab-active{
+        color: var(--secondary);
+    }
+}
+
+.tabs > div > div {
+    justify-content: center;
+}

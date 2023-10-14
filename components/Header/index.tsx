@@ -64,7 +64,7 @@ function Header() {
             }
         }
       
-       
+       window.addEventListener("scroll", handleScroll)
         
        
     },[])
