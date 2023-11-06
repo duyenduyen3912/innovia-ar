@@ -3,8 +3,10 @@ import { sendGet, sendPost } from "./axios";
 
 
 export interface IProductItem {
-    total_pages: string,
-    total_products: string,
+    status: string,
+    total_pages: number,
+    total_products: number,
+    index_page: string,
     data: [{
         Star: number,
         category: string,
@@ -13,7 +15,7 @@ export interface IProductItem {
         image: string,
         long_description: string,
         name: string,
-        price: string,
+        price: number,
         size: string,
         tag: "Juice" | "Food",
         weight: string
@@ -41,20 +43,26 @@ export interface ITagListPath {
     indexPage: string
 }
 
+export interface ISearchPath {
+    keyword: string,
+    page: string
+}
+
 const path = {
-    getAllProduct: '/DGetAllProduct?page=',
-    getAllProductByTag: '/DProduct?tag=',
-    getProductID: '/DProduct?id=',
-    getProductInCart: '/DCart.php?action=get',
-    getComment: '/DRate?id=',
-    getHighRateProduct: '/',
-    addToCart : '/DCart?action=add',
-    deleteProduct: '/DDelete.php',
-    deleteProductInCart: '/DCart?action=delete',
-    updateProductInCart: '/DCart?action=update',
-    addNewProduct: '/DNewProduct.php',
-    updateProduct: '/DUpateProduct.php',
-    order: '/DOrder?action=order'
+    getAllProduct: 'http://localhost:8080/products?page=',
+    getAllProductByTag: 'https://chippisoft.com/API/DProduct?tag=',
+    getAllProductByKeyword: 'http://localhost:8080/search?keyword=',
+    getProductID: 'http://localhost:8080/DProduct?id=',
+    getProductInCart: 'https://chippisoft.com/API/DCart.php?action=get',
+    getComment: 'https://chippisoft.com/API/DRate?id=',
+    getHighRateProduct: 'https://chippisoft.com/API/',
+    addToCart : 'https://chippisoft.com/API/DCart?action=add',
+    deleteProduct: 'https://chippisoft.com/API/DDelete.php',
+    deleteProductInCart: 'https://chippisoft.com/API/DCart?action=delete',
+    updateProductInCart: 'https://chippisoft.com/API/DCart?action=update',
+    addNewProduct: 'https://chippisoft.com/API/DNewProduct.php',
+    updateProduct: 'https://chippisoft.com/API/DUpateProduct.php',
+    order: 'https://chippisoft.com/API/DOrder?action=order'
 }
 
 export function getProductList(params: ITagListPath): Promise<any> {
@@ -69,7 +77,9 @@ export function getComment(params: string): Promise<IComment> {
     return sendGet(path.getComment + params)
 }
 
-
+export function getProductByKeyword(params: ISearchPath): Promise<IProductItem> {
+    return sendGet(path.getAllProductByKeyword + params.keyword + '&page=' + params.page)
+}
 
 export function getAllProduct(params): Promise<IProductItem> {
     return sendGet(path.getAllProduct+params)

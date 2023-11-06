@@ -27,7 +27,6 @@ module.exports = {
     ];
   },
   env: {
-    REACT_APP_API_DOMAIN: "https://chippisoft.com/API",
     NEXTAUTH_URL: "http://localhost:3000",
   },
   distDir: "build",

@@ -1,4 +1,4 @@
-import { HomeOutlined, SearchOutlined, HeartOutlined, BookOutlined, ShoppingCartOutlined, UserOutlined, MenuOutlined, CloseOutlined } from "@ant-design/icons";
+import { HomeOutlined, SearchOutlined, HeartOutlined, BookOutlined, ShoppingCartOutlined, UserOutlined, MenuOutlined, CloseOutlined, CameraOutlined } from "@ant-design/icons";
 import { Col, Menu, Row, Image} from "antd";
 import style from "./Header.module.scss"
 import classNames from "classnames/bind";
@@ -16,9 +16,9 @@ const cx = classNames.bind(style)
 
 function Header() {
     const router = useRouter()
-    const path = router.pathname
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false)
+    const [isOpenSearch, setIsOpenSearch] = useState(false)
     const [totalQuantity, setTotalQuantity] = useState(0)
     const onHandleLogout = () =>{
         dispatch(logoutUser())
@@ -39,6 +39,15 @@ function Header() {
         }
         
     }
+    const handleOpenSearch = () => {
+        document.getElementById("search-input").classList.toggle(cx("open"))
+    }
+    const handleSearch = (event) => {
+        if(event.key === 'Enter'){
+            router.push(`/search?keyword=${event.target.value}`)
+        }
+    }
+
     useEffect(()=> {
         function handleScroll() {
             var header = document.getElementById('header');
@@ -51,8 +60,8 @@ function Header() {
                 }
                 document.getElementById('search').classList.add(cx('scrolled-color'))
                 document.getElementById('cart').classList.add(cx('scrolled-color'))
-                document.getElementById('user').classList.add(cx('scrolled-color'))
-                console.log(document.getElementById('search'))
+                if(ApiUser.isLogin()) document.getElementById('user').classList.add(cx('scrolled-color'))
+                
             } else {
                 header.classList.remove(cx("scrolled"));
                 for(let i = 0; i < text.length; i++){
@@ -60,7 +69,7 @@ function Header() {
                 }
                 document.getElementById('search').classList.remove(cx('scrolled-color'))
                 document.getElementById('cart').classList.remove(cx('scrolled-color'))
-                document.getElementById('user').classList.remove(cx('scrolled-color'))
+                if(ApiUser.isLogin()) document.getElementById('user').classList.remove(cx('scrolled-color'))
             }
         }
       
@@ -138,7 +147,7 @@ function Header() {
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={7} xxl={4} className={cx("right")}>
                 <li className={cx("menu-item", "search")}>
-                    <div className={cx("search-wrap")}>
+                    <div className={cx("search-wrap")} onClick={handleOpenSearch}>
                         <SearchOutlined className={cx("search-icon")} id="search" />
                         
                     </div>
@@ -193,9 +202,19 @@ function Header() {
                 
                 </Col>
             </Row>
-           
+           <div className={cx("input-search-wrap")} id="search-input">
+            <div className={cx("input-wrap")}>
+                <input type={"text"} className={cx("input-search")} onKeyDown={handleSearch}/>
+                <input type="file" id="customFileInput" style={{display: "none"}} />
+                <label htmlFor={"customFileInput"} id="customFileLabel">
+                    <CameraOutlined style={{ fontSize: '24px', color: '#a58838', fontWeight: '600', cursor: 'pointer' }}/>
+                </label>
+                
+            </div>
+                
+           </div>
         </div>
-         <div className={`animate__animated animate__slideInDown ${cx('menu-responsive')}`} id="menuResponsive">
+        <div className={`animate__animated animate__slideInDown ${cx('menu-responsive')}`} id="menuResponsive">
          <div className={cx('menu')}>
              <li className={cx('menu-responsive-item')}>
                  <Link href={'/'} className={cx('menu-responsive-link')}>
@@ -227,7 +246,7 @@ function Header() {
              </li>
              
          </div>
-     </div>
+        </div>
     </>
      )
 }

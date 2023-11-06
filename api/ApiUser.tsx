@@ -6,9 +6,9 @@ import axios from "axios";
 
 
 const path = {
-    login: "/API.php",
-    signup: "/API.php",
-    getUserInfor: "/getUserInfor",
+    login: "https://chippisoft.com/API/API.php",
+    signup: "https://chippisoft.com/API/API.php",
+    getUserInfor: "https://chippisoft.com/API/getUserInfor",
     
 
 };

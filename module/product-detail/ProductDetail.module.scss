@@ -8,7 +8,7 @@
 
     .product-img-wrap {
         width: 100%;
-        height: 564px;
+        height: 400px;
         object-fit: cover;
         border-radius: 8px;
         overflow: hidden;
@@ -36,7 +36,7 @@
         .img-group-wrap{
             // padding: 0 6px;
             width: 100%;
-            height: 158px;
+            height: 140px;
         }
         .img-group-wrap > div {
             width: 100%;
@@ -60,14 +60,14 @@
 }
 
 .product-price {
-    margin-top: 8px;
+    margin-top: 30px;
     display: flex;
     align-items: start;
-
+    
     .price {
         margin-left: 4px;
-        font-size: 50px;
-        color: var(--textColor);
+        font-size: 40px;
+        color: var(--secondary);
         font-weight: 500;
     }
 }
@@ -83,12 +83,14 @@
 }
 
 .product-intro {
-    margin: 38px 0;
+ 
     font-size: 15px;
     color: var(--descriptionTextColor);
 }
 
 .product-order {
+    position: absolute;
+    bottom: 0;
     .input-number {
         margin-right: 20px;
         padding: 14px 5px;
@@ -132,6 +134,7 @@
     border: none;
     border-radius: 0;
     margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .descripttion-title {
@@ -146,6 +149,15 @@
     padding: 10px 0;
 }
 
+.review-row{
+    width: 100%;
+    padding: 0 16%;
+}
+
+.review-row > div {
+    width: 80%;
+}
+
 .review-wrap {
     .review-title {
         font-size: 18px;
@@ -158,11 +170,10 @@
         display: flex;
         margin: 15px 0;
         .review-img-wrap {
-            flex: 2;
+            flex: 1;
             width: 100%;
             height: 100%;
             object-fit: cover;
-
             overflow: hidden;
 
             .reviewer-img {

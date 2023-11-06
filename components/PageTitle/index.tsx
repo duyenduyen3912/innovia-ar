@@ -8,7 +8,14 @@ const cx = classNames.bind(style)
 export default function PageTitle(prop) {
   return (
     <div className={cx("page-title")}>
-        <Image src={require("../../assets/imgs/page-bg.png").default.src} alt="title-background" className={cx("image")} preview={false}/>
+        <Image 
+          src={prop.img} 
+          alt="title-background" 
+          className={cx("image")} 
+          fallback={require("../../assets/imgs/page-bg.png").default.src}
+          preview={false}
+        />
+        <div className={cx("overlay")}></div>
         <div className={cx("title")}>
             {prop.name}
         </div>

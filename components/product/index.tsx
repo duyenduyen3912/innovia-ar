@@ -70,7 +70,7 @@ export default function Product(props) {
           </Link>
 
           <div className={cx("product-star")}>
-            <Rate allowHalf disabled value={Math.round(props.star * 2) / 2} style={{ color: '#fbbcc0', fontSize: '15px' }} />
+            <Rate allowHalf disabled value={Math.round(props.star * 2) / 2} style={{ color: '#a58838', fontSize: '15px' }} />
           </div>
           <div className={cx("product-price")}>
             <span className={cx("product-text")}>Giá:</span>

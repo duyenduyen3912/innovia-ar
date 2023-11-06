@@ -5,7 +5,7 @@ import ApiUser from "./ApiUser";
 
 
 const path = {
-    getStatistical: '/DStatistical?action=',
+    getStatistical: 'https://chippisoft.com/API/DStatistical?action=',
    
 };
 
