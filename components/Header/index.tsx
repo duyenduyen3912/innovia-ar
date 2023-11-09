@@ -4,7 +4,7 @@ import style from "./Header.module.scss"
 import classNames from "classnames/bind";
 import Link from "next/link";
 import 'animate.css';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/slices/UserSlice";
 import ApiAdmin from "../../api/ApiAdmin";
 import ApiUser from "../../api/ApiUser";
@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { getProductInCart } from "../../api/ApiProduct";
+import { imageSearch } from "../../redux/slices/ImageSlice";
 const cx = classNames.bind(style)
 
 function Header() {
@@ -47,7 +48,32 @@ function Header() {
             router.push(`/search?keyword=${event.target.value}`)
         }
     }
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
 
+    function processBase64Data(base64String) {
+        const prefix = "data:image/png;base64,"; // Thay đổi tiền tố tùy theo loại tệp ảnh
+        const withoutPrefix = base64String.startsWith(prefix) ? base64String.slice(prefix.length) : base64String;
+    
+        // Sử dụng biểu thức chính quy để loại bỏ các ký tự đệm '=' ở cuối chuỗi
+        const base64DataWithoutPadding = withoutPrefix.replace(/=+$/, '');
+    
+        return base64DataWithoutPadding;
+    }
+    
+    async function handleSearchByImage (event)  {
+        const file = event.target.files[0]
+        const image = await toBase64(file)
+        console.log(image)
+        const data = processBase64Data(image)
+        console.log(data)
+        dispatch(imageSearch(data))
+        router.push('/search')
+    }
     useEffect(()=> {
         function handleScroll() {
             var header = document.getElementById('header');
@@ -89,7 +115,6 @@ function Header() {
 
     return (
         <>
-        
         <div className={cx("header")} id="header">
             <Row className={cx("header-wrap")}>
                 <Col  xs={0} sm={0} md={0} lg={0} xl={10} xxl={10} className={cx("left")}>
@@ -205,7 +230,7 @@ function Header() {
            <div className={cx("input-search-wrap")} id="search-input">
             <div className={cx("input-wrap")}>
                 <input type={"text"} className={cx("input-search")} onKeyDown={handleSearch}/>
-                <input type="file" id="customFileInput" style={{display: "none"}} />
+                <input type="file" id="customFileInput" style={{display: "none"}} onChange={handleSearchByImage} />
                 <label htmlFor={"customFileInput"} id="customFileLabel">
                     <CameraOutlined style={{ fontSize: '24px', color: '#a58838', fontWeight: '600', cursor: 'pointer' }}/>
                 </label>

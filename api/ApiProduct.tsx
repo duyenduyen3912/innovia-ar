@@ -52,6 +52,7 @@ const path = {
     getAllProduct: 'http://localhost:8080/products?page=',
     getAllProductByTag: 'https://chippisoft.com/API/DProduct?tag=',
     getAllProductByKeyword: 'http://localhost:8080/search?keyword=',
+    getAllProductByImage: 'http://localhost:8080/search-by-image?page=',
     getProductID: 'http://localhost:8080/DProduct?id=',
     getProductInCart: 'https://chippisoft.com/API/DCart.php?action=get',
     getComment: 'https://chippisoft.com/API/DRate?id=',
@@ -79,6 +80,12 @@ export function getComment(params: string): Promise<IComment> {
 
 export function getProductByKeyword(params: ISearchPath): Promise<IProductItem> {
     return sendGet(path.getAllProductByKeyword + params.keyword + '&page=' + params.page)
+}
+
+export function getProductByImage(params, body): Promise<IProductItem> {
+    return sendPost(path.getAllProductByImage + params, body, {
+        "Content-Type": "application/json"
+    })
 }
 
 export function getAllProduct(params): Promise<IProductItem> {
