@@ -43,16 +43,11 @@ export interface ITagListPath {
     indexPage: string
 }
 
-export interface ISearchPath {
-    keyword: string,
-    page: string
-}
 
 const path = {
     getAllProduct: 'http://localhost:8080/products?page=',
     getAllProductByTag: 'https://chippisoft.com/API/DProduct?tag=',
-    getAllProductByKeyword: 'http://localhost:8080/search?keyword=',
-    getAllProductByImage: 'http://localhost:8080/search-by-image?page=',
+    searchAllProduct: 'http://localhost:8080/search?page=',
     getProductID: 'http://localhost:8080/DProduct?id=',
     getProductInCart: 'https://chippisoft.com/API/DCart.php?action=get',
     getComment: 'https://chippisoft.com/API/DRate?id=',
@@ -78,12 +73,9 @@ export function getComment(params: string): Promise<IComment> {
     return sendGet(path.getComment + params)
 }
 
-export function getProductByKeyword(params: ISearchPath): Promise<IProductItem> {
-    return sendGet(path.getAllProductByKeyword + params.keyword + '&page=' + params.page)
-}
 
-export function getProductByImage(params, body): Promise<IProductItem> {
-    return sendPost(path.getAllProductByImage + params, body, {
+export function searchAllProduct(params, body): Promise<IProductItem> {
+    return sendPost(path.searchAllProduct + params, body, {
         "Content-Type": "application/json"
     })
 }

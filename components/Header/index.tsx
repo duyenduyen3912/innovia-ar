@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { getProductInCart } from "../../api/ApiProduct";
-import { imageSearch } from "../../redux/slices/ImageSlice";
+import { dataSearch } from "../../redux/slices/SearchSlice";
 const cx = classNames.bind(style)
 
 function Header() {
@@ -46,6 +46,7 @@ function Header() {
     const handleSearch = (event) => {
         if(event.key === 'Enter'){
             router.push(`/search?keyword=${event.target.value}`)
+            dispatch(dataSearch(event.target.value))
         }
     }
     const toBase64 = file => new Promise((resolve, reject) => {
@@ -66,13 +67,16 @@ function Header() {
     }
     
     async function handleSearchByImage (event)  {
-        const file = event.target.files[0]
-        const image = await toBase64(file)
+        if(event.target.files[0]) {
+            const file = event.target.files[0]
+            const image = await toBase64(file)
+            
+            const data = processBase64Data(image)
+            
+            dispatch(dataSearch(data))
+            router.push('/search')
+        }
         
-        const data = processBase64Data(image)
-        
-        dispatch(imageSearch(data))
-        router.push('/search')
     }
     useEffect(()=> {
         function handleScroll() {
@@ -98,8 +102,7 @@ function Header() {
                 if(ApiUser.isLogin()) document.getElementById('user').classList.remove(cx('scrolled-color'))
             }
         }
-      
-       window.addEventListener("scroll", handleScroll)
+      if(ApiUser.getIdUser()) window.addEventListener("scroll", handleScroll)
         
        
     },[])

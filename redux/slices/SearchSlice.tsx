@@ -3,17 +3,17 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState = '';
 
-const ImageSlice = createSlice({
-  name: "image",
+const SearchSlice = createSlice({
+  name: "search",
   initialState,
   reducers: {
-    imageSearch: (_, action) => {
+    dataSearch: (_, action) => {
       return action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {imageSearch} = ImageSlice.actions;
+export const {dataSearch} = SearchSlice.actions;
 
-export default ImageSlice.reducer;
+export default SearchSlice.reducer;

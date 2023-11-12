@@ -11,7 +11,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import UserReducer from "./slices/UserSlice";
-import ImageReducer from "./slices/ImageSlice";
+import SearchReducer from "./slices/SearchSlice";
 import {combineReducers} from "redux";
 import {configureStore} from "@reduxjs/toolkit";
 
@@ -47,7 +47,7 @@ const persistConfig = {
 
 const rootReducers = combineReducers({
   user: UserReducer,
-  image: ImageReducer,
+  search: SearchReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
