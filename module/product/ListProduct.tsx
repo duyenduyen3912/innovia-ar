@@ -28,7 +28,6 @@ export default function ListProduct() {
   const router = useRouter()
   const path = router.pathname
   const {keyword} = router.query
-  const imageData = useSelector((state: any) => state.user.loginUser);
   const [inputValue, setInputValue] = useState(200000);
   const [sortValue, setSortValue] = useState('rating')
   const [currentPage, setCurrentPage] = useState('1');

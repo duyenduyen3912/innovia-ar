@@ -68,9 +68,9 @@ function Header() {
     async function handleSearchByImage (event)  {
         const file = event.target.files[0]
         const image = await toBase64(file)
-        console.log(image)
+        
         const data = processBase64Data(image)
-        console.log(data)
+        
         dispatch(imageSearch(data))
         router.push('/search')
     }
