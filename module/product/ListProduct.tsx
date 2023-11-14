@@ -13,6 +13,7 @@ import { formatCurrency } from '../../constant/currencyFormatter'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import store from '../../redux/store'
+import Loading from '../../components/loading'
 
 function routerProcess(string) {
   const secondCharacter = string.charAt(1).toUpperCase();
@@ -97,8 +98,7 @@ export default function ListProduct() {
       
     }
   }, [data])
-  console.log(data)
-  console.log(product.length)
+
   return (
     <>
          <Head >
@@ -107,52 +107,63 @@ export default function ListProduct() {
             <link rel="icon" href="/icon.png" />
         </Head>
         <PageTitle name= {path.includes('list-product') ? 'Sản phẩm' : ''} />
-        <div className={cx("product")}>
-            <Row justify={'space-between'}>
-                <Col span={17} className="gutter-row">
-                  <div className={cx("sort")}>
-                        <div className={cx("product-number")}>
-                          {
-                            product.length != 0 ? `Hiển thị ${(parseInt(currentPage,10) - 1) * 12 + 0 + 1} – ${(parseInt(currentPage,10) - 1) * 12 + (product.length) -1 + 1} của ${data?.total_products}  kết quả` : "Don't have product to show"
-                          }
-                              
-                        </div>
-                        
-                        <Space wrap>
-                          <Select
-                            defaultValue="rating"
-                            style={{ width: 200 }}
-                            onChange={handleChange}
-                            value={sortValue}
-                            options={[
-                              { label: 'Sắp xếp theo độ phổ biến', value: 'popularity' },
-                              { label: 'Sắp xếp theo đánh giá', value: 'rating' },
-                              { label: 'Sắp xếp theo giá: từ thấp đến cao', value: 'low' },
-                              { label: 'Sắp xếp theo giá: từ cao đến thấp', value: 'high' },
-                            ]}
-                          />
-                          
-                        </Space>
-                  </div>
-                  <Row className={cx("row-product")} gutter={16}>
-                    { data?.total_products != 0 ? 
-                      <>
-                      {data?.data.map((item, index) => (
-                        <Product 
-                          key={item.id} 
-                          id={item.id}
-                          name={item.name} 
-                          price={item.price}
-                          image={item.image}
-                          category={item.category}
-                          description={item.description}
-                          long_description={item.long_description}
-                          size={item.size}
-                          tag={item.tag}
-                          weight={item.weight}
-                          star={item.Star}
-                          col={8}
+          <div className={cx("product")}>
+          <Row justify={'space-between'}>
+              <Col span={17} className="gutter-row">
+              {
+                isLoading ? 
+                <div className={cx("loading")} >
+                  <Image src={require("../../assets/imgs/loading.png").default.src} preview={false} className={cx("loading-name")} />
+                </div>
+                :
+                <>
+                
+                <div className={cx("sort")}>
+                      <div className={cx("product-number")}>
+                        {
+                          data?.total_products != 0 ? `Hiển thị ${(parseInt(currentPage,10) - 1) * 12 + 0 + 1} – ${(parseInt(currentPage,10) - 1) * 12 + (data?.data.length) -1 + 1} của ${data?.total_products}  kết quả` : "Không có sản phẩm cần tìm"
+                        }
+                            
+                      </div>
+                      
+                      <Space wrap>
+                        <Select
+                          defaultValue="rating"
+                          style={{ width: 200 }}
+                          onChange={handleChange}
+                          value={sortValue}
+                          options={[
+                            { label: 'Sắp xếp theo độ phổ biến', value: 'popularity' },
+                            { label: 'Sắp xếp theo đánh giá', value: 'rating' },
+                            { label: 'Sắp xếp theo giá: từ thấp đến cao', value: 'low' },
+                            { label: 'Sắp xếp theo giá: từ cao đến thấp', value: 'high' },
+                          ]}
                         />
+                        
+                      </Space>
+                </div>
+                <Row className={cx("row-product")} gutter={16}>
+                  { data?.total_products != 0 ? 
+                    <>
+                    {data?.data.map((item, index) => (
+                      <>
+                      <Product 
+                        key={item.id} 
+                        id={item.id}
+                        name={item.name} 
+                        price={item.price}
+                        image={item.image}
+                        category={item.category}
+                        description={item.description}
+                        long_description={item.long_description}
+                        size={item.size}
+                        tag={item.tag}
+                        weight={item.weight}
+                        star={item.Star}
+                        col={8}
+                      />
+                      
+                      </>
                       ))}
                       <Pagination
                         current={parseInt(currentPage,10)}
@@ -161,100 +172,101 @@ export default function ListProduct() {
                         onChange={handlePageChange}
                         className={cx("pagination")}
                       />
-                    </>
-                       : 
-                      <div style={{textAlign: 'center', width: '100%', marginTop: '30px'}}>
-                        <MehOutlined style={{color: '#5a5a5a', fontSize: '30px'}}/>
-                      <p className={cx("notifications")}>Xin lỗi, chúng tôi chưa tìm thấy sản phẩm phù hợp với yêu cầu của bạn</p>
-                      </div>
-                    }
-                  </Row>
-                  
-                </Col>
-                <Col span={6} className="gutter-row">
-                
-                <div className={cx('filter-price')}>
-                  Lọc theo giá
-                </div>
-                <Row justify='space-between'>
-                  <Col span={16}>
-                    <Slider
-                      min={0}
-                      max={200000000}
-                      step={20000000}
-                      onChange={onChange}
-                      value={typeof inputValue === 'number' ? inputValue : 0}
-                      trackStyle={{backgroundColor: '#a58838'}}
-                      railStyle={{backgroundColor: '#E5E5E5'}}
-                      handleStyle={{}}
-                    />
-                    </Col>
-                    <Col span={6}>
-                      <InputNumber
-                        min={100000}
-                        max={200000000}
-                        style={{width: '100%'}}
-                        value={inputValue}
-                        onChange={onChange}
-                      />
-                    </Col>
+                      </>
+                     : 
+                    <div style={{textAlign: 'center', width: '100%', marginTop: '30px'}}>
+                      <MehOutlined style={{color: '#5a5a5a', fontSize: '30px'}}/>
+                    <p className={cx("notifications")}>Xin lỗi, chúng tôi chưa tìm thấy sản phẩm phù hợp với yêu cầu của bạn</p>
+                    </div>
+                  }
                 </Row>
-                <div className={cx('price-range-wrap')}>
-                  <div className={cx('price-range')}>
-                    Giá:  0 -  {formatCurrency(inputValue)} VNĐ
-                  </div>
-                  
-                  <div className={cx('price-range-btn')}>
-                    <Button className={cx('btn')} onClick= {handleClickFilter}>Lọc</Button>
-                    
-                  </div>
-                  </div>
-                <div className={cx('product-category')}>
-                  <div className={cx('filter-price')}>
-                    Danh mục sản phẩm
-                  </div>
-                    
-                    {
-                      category.map((item,index)=> {
-                        return (
-                          <div className={cx('category-item')} key={index} onClick={() => handleChangeCategory(item)}>
-                            {item}
-                          </div>
-                        )
-                      })
-                    }
-                </div>
-                <div className={cx('product-rcm')}>
-                  <div className={cx('filter-price')}>
-                    Sản phẩm phổ biến
-                  </div>
-                  <div className={cx("product-item")}>
-                    <Image src={require("../../assets/imgs/kitchenroom.png").default.src} preview={false} className={cx("product-img")}/>
-                    <div className={cx("product-detail")}>
-                      <div className={cx("product-name")}>Ghế nhà ăn</div>
-                      <div className={cx("product-price")}>{formatCurrency(50000)}{" "} VNĐ</div>
-                    </div>
-                  </div>  
-                  <div className={cx("product-item")}>
-                    <Image src={require("../../assets/imgs/kitchenroom.png").default.src} preview={false} className={cx("product-img")}/>
-                    <div className={cx("product-detail")}>
-                      <div className={cx("product-name")}>Ghế nhà ăn</div>
-                      <div className={cx("product-price")}>{formatCurrency(50000)}{" "} VNĐ</div>
-                    </div>
-                  </div>  
-                  <div className={cx("product-item")}>
-                    <Image src={require("../../assets/imgs/kitchenroom.png").default.src} preview={false} className={cx("product-img")}/>
-                    <div className={cx("product-detail")}>
-                      <div className={cx("product-name")}>Ghế nhà ăn</div>
-                      <div className={cx("product-price")}>{formatCurrency(50000)}{" "} VNĐ</div>
-                    </div>
-                  </div>  
-                   
+                </>
+                 } 
+              </Col>
+              <Col span={6} className="gutter-row">
+              
+              <div className={cx('filter-price')}>
+                Lọc theo giá
+              </div>
+              <Row justify='space-between'>
+                <Col span={16}>
+                  <Slider
+                    min={0}
+                    max={200000000}
+                    step={20000000}
+                    onChange={onChange}
+                    value={typeof inputValue === 'number' ? inputValue : 0}
+                    trackStyle={{backgroundColor: '#a58838'}}
+                    railStyle={{backgroundColor: '#E5E5E5'}}
+                    handleStyle={{}}
+                  />
+                  </Col>
+                  <Col span={6}>
+                    <InputNumber
+                      min={100000}
+                      max={200000000}
+                      style={{width: '100%'}}
+                      value={inputValue}
+                      onChange={onChange}
+                    />
+                  </Col>
+              </Row>
+              <div className={cx('price-range-wrap')}>
+                <div className={cx('price-range')}>
+                  Giá:  0 -  {formatCurrency(inputValue)} VNĐ
                 </div>
                 
-                </Col>
-            </Row>
-        </div>
+                <div className={cx('price-range-btn')}>
+                  <Button className={cx('btn')} onClick= {handleClickFilter}>Lọc</Button>
+                  
+                </div>
+                </div>
+              <div className={cx('product-category')}>
+                <div className={cx('filter-price')}>
+                  Danh mục sản phẩm
+                </div>
+                  
+                  {
+                    category.map((item,index)=> {
+                      return (
+                        <div className={cx('category-item')} key={index} onClick={() => handleChangeCategory(item)}>
+                          {item}
+                        </div>
+                      )
+                    })
+                  }
+              </div>
+              <div className={cx('product-rcm')}>
+                <div className={cx('filter-price')}>
+                  Sản phẩm phổ biến
+                </div>
+                <div className={cx("product-item")}>
+                  <Image src={require("../../assets/imgs/kitchenroom.png").default.src} preview={false} className={cx("product-img")}/>
+                  <div className={cx("product-detail")}>
+                    <div className={cx("product-name")}>Ghế nhà ăn</div>
+                    <div className={cx("product-price")}>{formatCurrency(50000)}{" "} VNĐ</div>
+                  </div>
+                </div>  
+                <div className={cx("product-item")}>
+                  <Image src={require("../../assets/imgs/kitchenroom.png").default.src} preview={false} className={cx("product-img")}/>
+                  <div className={cx("product-detail")}>
+                    <div className={cx("product-name")}>Ghế nhà ăn</div>
+                    <div className={cx("product-price")}>{formatCurrency(50000)}{" "} VNĐ</div>
+                  </div>
+                </div>  
+                <div className={cx("product-item")}>
+                  <Image src={require("../../assets/imgs/kitchenroom.png").default.src} preview={false} className={cx("product-img")}/>
+                  <div className={cx("product-detail")}>
+                    <div className={cx("product-name")}>Ghế nhà ăn</div>
+                    <div className={cx("product-price")}>{formatCurrency(50000)}{" "} VNĐ</div>
+                  </div>
+                </div>  
+                 
+              </div>
+              
+              </Col>
+          </Row>
+      </div>
     </>
   )
 }

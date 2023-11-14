@@ -102,7 +102,8 @@ function Header() {
                 if(ApiUser.isLogin()) document.getElementById('user').classList.remove(cx('scrolled-color'))
             }
         }
-      if(ApiUser.getIdUser()) window.addEventListener("scroll", handleScroll)
+      window.addEventListener("scroll", handleScroll)
+      return () => window.removeEventListener("scroll", handleScroll)
         
        
     },[])

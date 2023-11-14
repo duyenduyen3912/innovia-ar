@@ -5,8 +5,6 @@ import style from "./Loading.module.scss"
 const cx = classNames.bind(style)
 export default function Loading() {
   return (
-    <div className={cx("loading")} >
-        
-    </div>
+    <div className={cx("loading")} ></div>
   )
 }
