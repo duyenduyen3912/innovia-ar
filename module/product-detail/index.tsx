@@ -13,6 +13,7 @@ import { formatCurrency } from '../../constant/currencyFormatter';
 import ApiUser from '../../api/ApiUser';
 import { useRouter } from 'next/router';
 import PageTitle from '../../components/PageTitle';
+import RecommendProduct from '../../components/RecommendProduct';
 
 const cx = classNames.bind(style)
 
@@ -33,6 +34,7 @@ export default function ProductDetail() {
             
         }
     );
+    
     const addProductMutation = useMutation (
         async (payload : IAddProductToCart) =>  await addProductToCart (payload), 
         {
@@ -66,7 +68,8 @@ export default function ProductDetail() {
             router.push("/login")
         }
     }
- 
+
+  
     return (
         <>
             <Head >
@@ -115,7 +118,7 @@ export default function ProductDetail() {
                     </div>
                     <div className={cx("product-price")}>
                         
-                        <span className={cx("price")}>{formatCurrency(parseInt(data?.data[0].price,10))} VNĐ</span>
+                        <span className={cx("price")}>{formatCurrency(parseInt(data?.data[0].price, 10))} VNĐ</span>
 
                     </div>
                     <div className={cx("product-rate")}>
@@ -207,7 +210,7 @@ export default function ProductDetail() {
                 </Collapse>
           
             </Row>
-           
+            <RecommendProduct category={data?.data[0].category} id = {data?.data[0].id} />
         </>
     )
 }

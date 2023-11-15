@@ -121,7 +121,7 @@ export default function ListProduct() {
                 <div className={cx("sort")}>
                       <div className={cx("product-number")}>
                         {
-                          data?.total_products != 0 ? `Hiển thị ${(parseInt(currentPage,10) - 1) * 12 + 0 + 1} – ${(parseInt(currentPage,10) - 1) * 12 + (data?.data.length) -1 + 1} của ${data?.total_products}  kết quả` : "Không có sản phẩm cần tìm"
+                          data?.total_products != 0 ? `Hiển thị ${(parseInt(currentPage,10) - 1) * 9 + 0 + 1} – ${(parseInt(currentPage,10) - 1) * 9 + (data?.data.length) -1 + 1} của ${data?.total_products}  kết quả` : "Không có sản phẩm cần tìm"
                         }
                             
                       </div>

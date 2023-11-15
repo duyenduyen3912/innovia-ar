@@ -47,6 +47,7 @@ export interface ITagListPath {
 const path = {
     getAllProduct: 'http://localhost:8080/products?page=',
     getAllProductByTag: 'https://chippisoft.com/API/DProduct?tag=',
+    getAllProductByCategory: 'http://localhost:8080/GetProductByCategory?category=',
     searchAllProduct: 'http://localhost:8080/search?page=',
     getProductID: 'http://localhost:8080/DProduct?id=',
     getProductInCart: 'https://chippisoft.com/API/DCart.php?action=get',
@@ -67,6 +68,10 @@ export function getProductList(params: ITagListPath): Promise<any> {
 
 export function getProductID(params: string): Promise<IProductItem> {
     return sendGet(path.getProductID + params)
+}
+
+export function getProductByCategory(params: string): Promise<IProductItem> {
+    return sendGet(path.getAllProductByCategory + params)
 }
 
 export function getComment(params: string): Promise<IComment> {
