@@ -10,7 +10,10 @@ const cx = classNames.bind(Style);
 export default function RecommendProduct(props) {
     const [visibleProduct, setVisibleProduct] = useState(4)
     const [data,setData] = useState<IProductItem>();
-    const {data: categoryProduct} = useQuery(['category_product', props.category],() => getProductByCategory(props.category))
+    const {data: categoryProduct} = useQuery(['category_product', props.category],() => getProductByCategory({
+        category: props.category,
+        page: 1
+    }))
 
     const handleShowmore = () => {
         setVisibleProduct(categoryProduct?.total_products)

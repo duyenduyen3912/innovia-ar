@@ -132,6 +132,15 @@
  
 }
 
+.recommend-product{
+    margin-top: 40px;
+    .recommend-title{
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--descriptionTextColor);
+    }
+}
+
 .loading {
     width: 100%;
     height: 500px;

@@ -23,6 +23,40 @@ export interface IProductItem {
 
 }
 
+export interface IProductListItem {
+    status: string,
+    total_pages: number,
+    total_products: number,
+    index_page: string,
+    data: [{
+        Star: number,
+        category: string,
+        description: string,
+        id: number,
+        image: string,
+        long_description: string,
+        name: string,
+        price: number,
+        size: string,
+        tag: "Juice" | "Food",
+        weight: string
+    }],
+    recommend_product : [{
+        Star: number,
+        category: string,
+        description: string,
+        id: number,
+        image: string,
+        long_description: string,
+        name: string,
+        price: number,
+        size: string,
+        tag: "Juice" | "Food",
+        weight: string
+    }]
+
+}
+
 export interface IComment {
     status: string,
     data: [{
@@ -43,6 +77,11 @@ export interface ITagListPath {
     indexPage: string
 }
 
+export interface IDataRes {
+    status: string,
+    data: String[]
+}
+
 
 const path = {
     getAllProduct: 'http://localhost:8080/products?page=',
@@ -52,6 +91,7 @@ const path = {
     getProductID: 'http://localhost:8080/DProduct?id=',
     getProductInCart: 'https://chippisoft.com/API/DCart.php?action=get',
     getComment: 'https://chippisoft.com/API/DRate?id=',
+    getCategory: 'http://localhost:8080/Category',
     getHighRateProduct: 'https://chippisoft.com/API/',
     addToCart : 'https://chippisoft.com/API/DCart?action=add',
     deleteProduct: 'https://chippisoft.com/API/DDelete.php',
@@ -70,22 +110,25 @@ export function getProductID(params: string): Promise<IProductItem> {
     return sendGet(path.getProductID + params)
 }
 
-export function getProductByCategory(params: string): Promise<IProductItem> {
-    return sendGet(path.getAllProductByCategory + params)
+export function getProductByCategory(params): Promise<IProductItem> {
+    return sendGet(path.getAllProductByCategory + params.category + '&page=' + params.page)
 }
 
 export function getComment(params: string): Promise<IComment> {
     return sendGet(path.getComment + params)
 }
 
+export function getCategory(): Promise<IDataRes> {
+    return sendGet(path.getCategory)
+}
 
-export function searchAllProduct(params, body): Promise<IProductItem> {
+export function searchAllProduct(params, body) {
     return sendPost(path.searchAllProduct + params, body, {
         "Content-Type": "application/json"
     })
 }
 
-export function getAllProduct(params): Promise<IProductItem> {
+export function getAllProduct(params) {
     return sendGet(path.getAllProduct+params)
 }
 

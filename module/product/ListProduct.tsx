@@ -7,8 +7,8 @@ import style from "./Product.module.scss"
 import Product from '../../components/product'
 import { DollarCircleOutlined, MehOutlined, SearchOutlined } from '@ant-design/icons'
 import Search from 'antd/es/input/Search'
-import { useQuery } from 'react-query'
-import { getAllProduct, searchAllProduct, getProductList, IProductItem } from '../../api/ApiProduct'
+import { useMutation, useQuery } from 'react-query'
+import { getAllProduct, searchAllProduct, getProductList, IProductItem, getCategory, getProductByCategory } from '../../api/ApiProduct'
 import { formatCurrency } from '../../constant/currencyFormatter'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
@@ -28,13 +28,15 @@ export default function ListProduct() {
   const {search} = store.getState();
   const router = useRouter()
   const path = router.pathname
-  
+  const [pathName, setPathName] = useState('')
   const [inputValue, setInputValue] = useState(200000);
   const [sortValue, setSortValue] = useState('rating')
   const [currentPage, setCurrentPage] = useState('1');
   const [product, setProduct] = useState([])
-  const [category, setCategory] = useState([])
-
+  const [category, setCategory] = useState("")
+  const [isRender, setIsRender] = useState(false)
+  const {data: ListCategory} = useQuery(['category'], () => getCategory())
+ 
   const handleChange = (value: string) => {
     setSortValue(value)
     if(value === 'low'){
@@ -69,36 +71,37 @@ export default function ListProduct() {
   }
 
   const handleChangeCategory = (category) => {
-    const filterCategory = data?.data.filter((item) => {
-      return item.category === category
-    })
-    setProduct(filterCategory)
-   
+   setCategory(category)
+   setIsRender(true);
   }
   
   const fetchData = async () => {
+    if(isRender === true && category !== "") {
+      return getProductByCategory({category: category, page: 1})
+    } else if(isRender === true && category === ""){
+      return getAllProduct(currentPage)
+    }
     if (path.includes('list-product')) {
       return getAllProduct(currentPage);
     } else {
       return searchAllProduct(currentPage, search);
     }
+    
+    
   };
-  const queryKey = ['data', search, currentPage];
+  const queryKey = ['data',category, search, path, currentPage];
   const {isLoading, isError, isFetching, data, error} = useQuery(queryKey, fetchData);
 
-
   useEffect(()=> {
-    if(data) {
-      if(data.status === "success") {
-        const uniqueCategories = _.uniqBy(data.data.map(item => item.category));
-        setProduct(data.data)
-        setCategory(uniqueCategories)
-        console.log(data.data)
-      }
-      
+    if(data){
+        if(isRender === true ){
+          setIsRender(false)
+        }
     }
-  }, [data])
-
+    
+  }, [isRender])
+  console.log(isRender)
+  
   return (
     <>
          <Head >
@@ -180,6 +183,40 @@ export default function ListProduct() {
                     </div>
                   }
                 </Row>
+                {
+                  data?.recommend_product !== undefined ? 
+                  <div className={cx("recommend-product")}>
+                  <div className={cx("recommend-title")}> Sản phẩm bạn có thể thích</div>
+                    <Row className={cx("row-product")} gutter={16}>
+                                      
+                      {data?.recommend_product.map((item, index) => (
+                        <>
+                        <Product 
+                          key={item.id} 
+                          id={item.id}
+                          name={item.name} 
+                          price={item.price}
+                          image={item.image}
+                          category={item.category}
+                          description={item.description}
+                          long_description={item.long_description}
+                          size={item.size}
+                          tag={item.tag}
+                          weight={item.weight}
+                          star={item.Star}
+                          col={8}
+                        />
+                        
+                        </>
+                        ))}
+                      
+                    </Row>
+                  </div>
+                  
+                : 
+                null
+                }
+                
                 </>
                  } 
               </Col>
@@ -225,9 +262,11 @@ export default function ListProduct() {
                 <div className={cx('filter-price')}>
                   Danh mục sản phẩm
                 </div>
-                  
+                <div className={cx('category-item')}  onClick={() => handleChangeCategory("")}>
+                          Tất cả
+                  </div>
                   {
-                    category.map((item,index)=> {
+                    ListCategory?.data.map((item,index)=> {
                       return (
                         <div className={cx('category-item')} key={index} onClick={() => handleChangeCategory(item)}>
                           {item}
@@ -235,6 +274,7 @@ export default function ListProduct() {
                       )
                     })
                   }
+                  
               </div>
               <div className={cx('product-rcm')}>
                 <div className={cx('filter-price')}>
