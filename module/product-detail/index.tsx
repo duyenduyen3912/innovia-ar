@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
-import { Col, Collapse, InputNumber, message, Rate, Row, Button } from 'antd';
+import { Col, Collapse, InputNumber, message, Rate, Row, Button, Pagination, Form } from 'antd';
 import { Image as ImageAnt } from 'antd'
 import style from "./ProductDetail.module.scss"
 import classNames from 'classnames/bind';
@@ -8,12 +8,13 @@ import classNames from 'classnames/bind';
 import { DollarCircleOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import Product from '../../components/product';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { addProductToCart, getComment, getProductID, IAddProductToCart } from '../../api/ApiProduct';
+import { addProductToCart, addReview, getComment, getProductID, IAddProductToCart } from '../../api/ApiProduct';
 import { formatCurrency } from '../../constant/currencyFormatter';
 import ApiUser from '../../api/ApiUser';
 import { useRouter } from 'next/router';
 import PageTitle from '../../components/PageTitle';
 import RecommendProduct from '../../components/RecommendProduct';
+import FormItem from 'antd/es/form/FormItem';
 
 const cx = classNames.bind(style)
 
@@ -21,6 +22,8 @@ export default function ProductDetail() {
     const router = useRouter();
     const { id } = router.query;
     const [quantity,setQuantity] = useState(1)
+    const [currentPage, setCurrentPage] = useState('1')
+    const [isReview, setIsReview] = useState(false)
     const queryClient = useQueryClient()
     const cart = queryClient.getQueryData(['cart', ApiUser.getIdUser()])
     const { isLoading, isError, isFetching, data, error } = useQuery(['product', id], () => getProductID(`${id}`),
@@ -28,13 +31,12 @@ export default function ProductDetail() {
             enabled: id != undefined
         }
     );
-    const { data: data_cmt } = useQuery(['comment', id], () => getComment(`${id}`),
-        {
-            enabled: id != undefined,
-            
-        }
-    );
-    
+    const {data: review, refetch} = useQuery(['review', currentPage], () => getComment({
+        idproduct: `${id}`,
+        page: currentPage
+    }), {
+        enabled: id != undefined
+    })
     const addProductMutation = useMutation (
         async (payload : IAddProductToCart) =>  await addProductToCart (payload), 
         {
@@ -43,17 +45,43 @@ export default function ProductDetail() {
           },
           onSettled: async (data:any) => {
             if(data.status === "success") {
-              console.log(data)
-               message.success('added to cart')
+               message.success('Thêm sản phẩm thành công')
                queryClient.refetchQueries(['cart', ApiUser.getIdUser()])
               
              } else {
-                message.error('something went wrong, please try again')
+                message.error('Có lỗi xảy ra, hãy thử lại sau!')
              }
           }
         }
-      )
-      
+    )
+    const addReviewMutation = useMutation(
+        async (payload: any) => await addReview(payload),
+        {
+            onSettled: async (data : any) => {
+                if(data === "success") {                  
+                     message.success('Thêm đánh giá thành cômg')
+                     refetch()
+                    
+                } else {
+                    message.error('Có lỗi xảy ra, hãy thử lại sau!')
+                }
+            }
+        }
+    )
+    
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+      };
+    const onHandleSubmit = (values) => {
+        addReviewMutation.mutate({
+            idproduct: `${id}`,
+            star: values.star,
+            comment: values.comment
+        })
+        setIsReview(true)
+    }
+    
+    
     const severImages: string[] = data?.data[0].image.split(";")
     const image: string[] = severImages || [];
     const onHandleAddtocart = () => {
@@ -68,7 +96,7 @@ export default function ProductDetail() {
             router.push("/login")
         }
     }
-
+    
   
     return (
         <>
@@ -122,8 +150,8 @@ export default function ProductDetail() {
 
                     </div>
                     <div className={cx("product-rate")}>
-                        <Rate allowHalf disabled value={Math.round( data?.data[0].Star * 2) / 2} style={{ color: "#FBBCC0", fontSize: "12px" }} />
-                        <span className={cx("number-rate")}>( {data_cmt?.status.includes('success') ? data_cmt?.data.length : 0} {" "} đánh giá)</span>
+                        <Rate allowHalf disabled value={Math.round( data?.data[0].star * 2) / 2} style={{ color: "#a58838", fontSize: "12px" }} />
+                        <span className={cx("number-rate")}>( {review?.status.includes('success') ? review?.data.length : 0} {" "} đánh giá)</span>
                     </div>
                     <div className={cx("product-infor")}>
 
@@ -173,39 +201,72 @@ export default function ProductDetail() {
                     <Collapse.Panel header={<CustomHeader>Đánh giá</CustomHeader>} key="3" className={cx("description")}>
                         <div className={cx("review-wrap")}>
                             <div className={cx("review-title")}> 
-                            {data_cmt?.status.includes('success') ? data_cmt?.data.length : 0} {" "}
+                            {review?.status.includes('success') ? review?.data.length : 0} {" "}
                             đánh giá cho {data?.data[0].name}
                             </div>
                             {
-                                data_cmt?.status.includes('success') ? 
-                                data_cmt?.data.map((item, index) => {
+                                
+                                review?.status.includes('success') ? 
+                                <> { review?.data.map((item, index) => {
                                     return (
                                         <div className={cx("review")} key={index}>
                                             <div className={cx("review-img-wrap")}>
-                                                <ImageAnt src={require("../../assets/imgs/jisoo.jpg").default.src} alt="reviewer" className={cx("reviewer-img")} preview={false} />
+                                                <ImageAnt src={require("../../assets/imgs/avt-logo.png").default.src} alt="reviewer" className={cx("reviewer-img")} preview={false} />
                                             </div>
                                             <div className={cx("review-content")}>
 
-                                                <Rate allowHalf disabled value={Math.round(item.Star * 2) / 2} className={cx("review-star")} style={{ color: "#FBBCC0", fontSize: "13px" }} />
-                                                <div className={cx("review-name")}>Smoothie lover</div>
+                                                <Rate allowHalf disabled value={Math.round(item.star * 2) / 2} className={cx("review-star")} style={{ color: "#a58838", fontSize: "13px" }} />
+                                                <div className={cx("review-name")}>innovia lover</div>
                                                 <div className={cx("review-text")}>
-                                                    {item.Comment}
+                                                    {item.comment}
                                                 </div>
                                             </div>
                                         </div>
                                     )
-                                }) : ''
+                                }) }
+                               
+                                <Pagination
+                                    current={parseInt(currentPage,10)}
+                                    total={review?.total_reviews} 
+                                    pageSize={5}
+                                    onChange={handlePageChange}
+                                    className={cx("pagination")}
+                                /> </>
+                                : ''
                             }
                             
                         </div>
-                        <div className={cx("your-review")}>
+                        {!isReview ? 
+                            <div className={cx("your-review")}>
                             <div className={cx("your-review-title")}>Thêm đánh giá</div>
-                            <div className={cx("your-review-title")}>Điểm</div>
-                            <Rate style={{ color: "#FBBCC0", fontSize: "13px" }} />
-                            <div className={cx("your-review-title")}>Đánh giá của bạn</div>
-                            <textarea className={cx("your-review-input")} />
-                            <Button className={cx("order-btn")}>Gửi</Button>
+                                <Form onFinish={onHandleSubmit}>
+                                    <Form.Item
+                                        label="Điểm"
+                                        name="star"
+                                        rules={[{ required: true, message: 'Hãy cho điểm sản phẩm bạn nhé!' }]}
+                                        className={cx("your-review-title")}
+                                    >
+                                        <Rate style={{ color: "#a58838", fontSize: "13px" }} />
+                                    </Form.Item>
+                                    <Form.Item
+                                        label="Đánh giá của bạn"
+                                        name="comment"
+                                        rules={[{ required: true, message: 'Hãy bình luận sản phẩm!' }]}
+                                        className={cx("your-review-title")}
+                                    >
+                                    
+                                        <textarea className={cx("your-review-input")} />
+                                    </Form.Item>
+                                    <Form.Item
+                                        
+                                    >
+                                        <Button htmlType='submit' className={cx("order-btn") }>Gửi</Button>
+                                    </Form.Item>
+                                </Form>
                         </div>
+                        : null
+                        }
+                        
                     </Collapse.Panel>
                 </Collapse>
           

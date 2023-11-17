@@ -27,11 +27,11 @@ export default function Product(props) {
       onSettled: async (data:any) => {
         if(data.status === "success") {
           console.log(data)
-           message.success('added to cart')
+           message.success('Thêm sản phẩm thành công')
            queryClient.refetchQueries(['cart', ApiUser.getIdUser()])
           
          } else {
-            message.error('something went wrong, please try again')
+            message.error('Có lỗi xảy ra, hãy thử lại sau!')
          }
       }
     }
@@ -70,11 +70,11 @@ export default function Product(props) {
           </Link>
 
           <div className={cx("product-star")}>
-            <Rate allowHalf disabled value={Math.round(props.star * 2) / 2} style={{ color: '#a58838', fontSize: '15px' }} />
+            <Rate allowHalf disabled value={Math.round(props.star * 2) / 2} style={{ color: '#a58838', fontSize: '12px' }} />
           </div>
           <div className={cx("product-price")}>
             <span className={cx("product-text")}>Giá:</span>
-            {/* <DollarOutlined style={{ fontSize: '15px', color: '#5a5a5a', fontWeight: '500' }} /> */}
+            
             <span className={cx("price")}>{props.price ? formatCurrency(props.price) : ''} VNĐ</span>
           </div>
         </div>

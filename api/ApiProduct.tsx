@@ -8,7 +8,7 @@ export interface IProductItem {
     total_products: number,
     index_page: string,
     data: [{
-        Star: number,
+        star: number,
         category: string,
         description: string,
         id: number,
@@ -59,9 +59,13 @@ export interface IProductListItem {
 
 export interface IComment {
     status: string,
+    total_pages: number,
+    total_reviews: number,
+    index_page:number,
     data: [{
-        Star: number,
-        Comment: string,
+        idproduct: number,
+        star: number,
+        comment: string,
     }]
 }
 
@@ -90,10 +94,11 @@ const path = {
     searchAllProduct: 'http://localhost:8080/search?page=',
     getProductID: 'http://localhost:8080/DProduct?id=',
     getProductInCart: 'https://chippisoft.com/API/DCart.php?action=get',
-    getComment: 'https://chippisoft.com/API/DRate?id=',
+    getComment: 'http://localhost:8080/getReview?idproduct=',
     getCategory: 'http://localhost:8080/Category',
     getHighRateProduct: 'https://chippisoft.com/API/',
     addToCart : 'https://chippisoft.com/API/DCart?action=add',
+    addReview: 'http://localhost:8080/addReview',
     deleteProduct: 'https://chippisoft.com/API/DDelete.php',
     deleteProductInCart: 'https://chippisoft.com/API/DCart?action=delete',
     updateProductInCart: 'https://chippisoft.com/API/DCart?action=update',
@@ -114,8 +119,8 @@ export function getProductByCategory(params): Promise<IProductItem> {
     return sendGet(path.getAllProductByCategory + params.category + '&page=' + params.page)
 }
 
-export function getComment(params: string): Promise<IComment> {
-    return sendGet(path.getComment + params)
+export function getComment(params): Promise<IComment> {
+    return sendGet(path.getComment + params.idproduct + '&page=' + params.page)
 }
 
 export function getCategory(): Promise<IDataRes> {
@@ -142,6 +147,10 @@ export function addProductToCart(params :IAddProductToCart): Promise<any> {
     return sendPost(path.addToCart, params, {
         Authorization : ApiUser.getAuthToken()
     })
+}
+
+export function addReview(params) :Promise<any> {
+    return sendPost(path.addReview, params)
 }
 
 export function deleteProduct(params: string) : Promise<any> {

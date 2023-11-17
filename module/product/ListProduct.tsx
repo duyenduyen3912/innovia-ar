@@ -162,7 +162,7 @@ export default function ListProduct() {
                         size={item.size}
                         tag={item.tag}
                         weight={item.weight}
-                        star={item.Star}
+                        star={item.star}
                         col={8}
                       />
                       
@@ -203,7 +203,7 @@ export default function ListProduct() {
                           size={item.size}
                           tag={item.tag}
                           weight={item.weight}
-                          star={item.Star}
+                          star={item.star}
                           col={8}
                         />
                         
