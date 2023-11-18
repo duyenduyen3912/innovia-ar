@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import Footer from "../../components/Footer";
 import {SessionProvider} from "next-auth/react"
 import { useRouter } from "next/router";
+import ChatApp from "../../components/ChatApp";
 
 
 const cx = classNames.bind(style)
@@ -30,6 +31,9 @@ function Layout({children}) {
             </div>
             <div className={cx("footer")}>
                 <Footer />
+            </div>
+            <div className={cx("chat")}>
+                <ChatApp />
             </div>
         </div>
         

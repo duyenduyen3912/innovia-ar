@@ -1,7 +1,13 @@
 
 .app {
     min-height: 100vh;
- 
+    position: relative;
+}
+
+.chat{
+    position: fixed;
+    bottom: 20px;
+    right: 50px;
 }
 
 
