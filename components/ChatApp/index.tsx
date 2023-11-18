@@ -3,14 +3,22 @@ import classNames from 'classnames/bind'
 import Style from "./ChatApp.module.scss"
 import { Image } from 'antd'
 import { MinusOutlined, SendOutlined } from '@ant-design/icons'
-
+import "animate.css"
 const cx = classNames.bind(Style)
 export default function ChatApp() {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpenChat = () => {
-        if(isOpen === true) setIsOpen(false)
-        else setIsOpen(true)
+        if(isOpen === true) {
+            document.getElementById("chat").classList.add("animate__fadeOutDownBig")
+            setTimeout(()=>{
+                setIsOpen(false)
+            }, 300)
+            
+        }
+        else {
+            setIsOpen(true)
+        }
     }
 
     console.log(isOpen)
@@ -21,7 +29,7 @@ export default function ChatApp() {
                 <Image src={require("../../assets/imgs/chat-logo.png").default.src} className={cx("chat-icon")} preview={false} />
             </div>
             :
-            <div className={cx("chat")}>
+            <div className={ `animate__animated animate__fadeInUpBig ${cx("chat")}`} id="chat">
                 <div className={cx("chat-title")}>
                     <div className={cx("title")}>innovia</div>
                     <div className={cx("close")} onClick={handleOpenChat}>
