@@ -85,6 +85,22 @@
     margin-bottom: 10px;
 }
 
+.chat-options{
+    background-color: #fff;
+    border-radius: 4px;
+    list-style: none;
+    padding-left: 10px !important;
+    .chat-item{
+        cursor: pointer;
+        padding: 10px 0;
+        color: var(--secondary);
+        font-weight: 600;
+        &:hover{
+            color: var(--primary);
+        }
+    }
+}
+
 
 .chat-input{
     position: fixed;
