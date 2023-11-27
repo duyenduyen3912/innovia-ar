@@ -12,6 +12,7 @@ import ApiUser from '../../api/ApiUser'
 import { deleteProductInCart, getProductInCart, updateProductInCart } from '../../api/ApiProduct'
 import { formatCurrency } from '../../constant/currencyFormatter'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 
 
@@ -34,12 +35,13 @@ interface DataType {
 
 export default function Cart() {
     const queryClient = useQueryClient();
+    const router = useRouter()
     const [cartList, setCartList] = useState([])
     const [subtotal,setSubtotal] = useState(0)
     const [totalQuantity,setTotalQuantity] = useState(0)
     const [productOrder, setProductOrder] = useState('')
     
-    const { data : cart, refetch} = useQuery(['cart', ApiUser.getIdUser()], () => getProductInCart({iduser: ApiUser.getIdUser() }),
+    const { data : cart, refetch} = useQuery(['cart', ApiUser.getIdUser()], () => getProductInCart(ApiUser.getIdUser()),
     {
         enabled: ApiUser.getIdUser() !== null
     }
@@ -50,9 +52,14 @@ export default function Cart() {
           onSuccess: async (data: any) => {
        
             if(data.status === "success") {
-                message.success("Delete product successfully")
-            } else {
-                message.error("Something went wrong, please try again!")
+                message.success("Xoá sản phẩm thành công")
+            } else if(data.status === "failed"){
+                message.error("Có lỗi xảy ra, vui lòng thử lại!")
+            } else if(data.status === "ExpiredToken"){
+                message.error("Hết phiên đăng nhập, vui lòng đăng nhập lại!")
+                setTimeout(()=> {
+                    router.push("/login")
+                }, 2000)
             }
             refetch()
           }
@@ -62,7 +69,17 @@ export default function Cart() {
         async (payload: any) => await updateProductInCart(payload),
         {
           onSuccess: async (data: any) => {
-            refetch()
+            if(data.status === "success") {
+                refetch()
+            } else if(data.status === "ExpiredToken"){
+                message.error("Hết phiên đăng nhập, vui lòng đăng nhập lại!")
+                setTimeout(()=> {
+                    router.push("/login")
+                }, 2000)
+            }  if(data.status === "failed") {
+                message.error("Có lỗi xảy ra, vui lòng thử lại sau!")
+            }
+            
           }
           
         }
@@ -90,7 +107,7 @@ export default function Cart() {
        queryClient.setQueryData('subtotal', subtotal)
        queryClient.setQueryData('product-order', productOrder)
     }
-
+    console.log(cart)
     useEffect(()=> {
         if(cart?.status === "success"){
             const newCartData = cart?.data.map((item) => {
@@ -175,7 +192,7 @@ export default function Cart() {
             }
         },
         {
-            title: 'product',
+            title: 'sản phẩm',
             dataIndex: 'name',
             key: 'name',
             width: 400,
@@ -192,7 +209,7 @@ export default function Cart() {
             }
         },
         {
-            title: 'price',
+            title: 'giá',
             dataIndex: 'price',
             key: 'price',
             width: 130,
@@ -206,7 +223,7 @@ export default function Cart() {
             }
         },
         {
-            title: 'quantity',
+            title: 'số lượng',
             dataIndex: 'quantity',
             key: 'quantity',
             width: 260,
@@ -224,7 +241,7 @@ export default function Cart() {
             }
         },
         {
-            title: 'subtotal',
+            title: 'tổng',
             dataIndex: 'subtotal',
             key: 'subtotal',
             width: 180,
@@ -251,21 +268,22 @@ export default function Cart() {
             <Table columns={columns} dataSource={cartList} className={cx("cart-table")}/>
             <div className={cx("total")} style={{textAlign: 'end', padding: '10px 90px', fontSize: "18px", color: "#000", fontWeight: "500"}}>
                 <div className={cx("total-item")}>
-                        <span className={cx("total-name")}>Total quantity:</span>
-                        <span className={cx("total-value")}>{totalQuantity ? formatCurrency(totalQuantity): 0} {" "} items</span>
+                        <span className={cx("total-name")}>Tổng sản phẩm:</span>
+                        <span className={cx("total-value")}>{totalQuantity ? formatCurrency(totalQuantity): 0} {" "} sản phẩm</span>
                 </div>
                 <div className={cx("total-item")}>
-                        <span className={cx("total-name")}> Total price:</span>
+                        <span className={cx("total-name")}> Tổng thanh toán:</span>
                         <span className={cx("total-value")}>
-                            <DollarOutlined style={{fontSize: '15px', marginRight: "4px"}}/>
+                            
                             {subtotal ? formatCurrency(subtotal) : 0}
+                            {" "} VNĐ
                         </span>
                 </div>
                
             </div>
             <div style={{textAlign: 'center'}}>
                 <Link href={'/checkout'}>
-                    <Button className={cx("btn")} onClick={handleCheckout}>proceed to checkout</Button>
+                    <Button className={cx("btn")} onClick={handleCheckout}>Đặt hàng</Button>
                 </Link>
                 
             </div>

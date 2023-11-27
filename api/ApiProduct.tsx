@@ -17,7 +17,7 @@ export interface IProductItem {
         name: string,
         price: number,
         size: string,
-        tag: "Juice" | "Food",
+        tag: "Bộ" | "Đơn",
         weight: string
     }]
 
@@ -70,8 +70,8 @@ export interface IComment {
 }
 
 export interface IAddProductToCart {
-    iduser: string,
-    idproduct: string,
+    iduser: number,
+    idproduct: number,
     quantity: number,
     note: string
 }
@@ -89,27 +89,22 @@ export interface IDataRes {
 
 const path = {
     getAllProduct: 'http://localhost:8080/products?page=',
-    getAllProductByTag: 'https://chippisoft.com/API/DProduct?tag=',
     getAllProductByCategory: 'http://localhost:8080/GetProductByCategory?category=',
     searchAllProduct: 'http://localhost:8080/search?page=',
     getProductID: 'http://localhost:8080/DProduct?id=',
-    getProductInCart: 'https://chippisoft.com/API/DCart.php?action=get',
+    getProductInCart: 'http://localhost:8080/selectCart',
     getComment: 'http://localhost:8080/getReview?idproduct=',
     getCategory: 'http://localhost:8080/Category',
-    getHighRateProduct: 'https://chippisoft.com/API/',
-    addToCart : 'https://chippisoft.com/API/DCart?action=add',
+    addToCart : 'http://localhost:8080/addToCart',
     addReview: 'http://localhost:8080/addReview',
-    deleteProduct: 'https://chippisoft.com/API/DDelete.php',
-    deleteProductInCart: 'https://chippisoft.com/API/DCart?action=delete',
-    updateProductInCart: 'https://chippisoft.com/API/DCart?action=update',
-    addNewProduct: 'https://chippisoft.com/API/DNewProduct.php',
-    updateProduct: 'https://chippisoft.com/API/DUpateProduct.php',
-    order: 'https://chippisoft.com/API/DOrder?action=order'
+    deleteProductInCart: 'http://localhost:8080/deleteCart',
+    updateProductInCart: 'http://localhost:8080/updateCart',
+    order: 'http://localhost:8080/order',
+    getPopularProduct: 'http://localhost:8080/selectBestSellingProduct',
+    getOrderList: 'http://localhost:8080/selectOrderList',
+    getOrderItem: 'http://localhost:8080/selectOrderItem'
 }
 
-export function getProductList(params: ITagListPath): Promise<any> {
-    return sendGet(path.getAllProductByTag + params.tag + "&page=" +params.indexPage )
-}
 
 export function getProductID(params: string): Promise<IProductItem> {
     return sendGet(path.getProductID + params)
@@ -139,7 +134,8 @@ export function getAllProduct(params) {
 
 export function getProductInCart(params): Promise<any> {
     return sendPost(path.getProductInCart, params, {
-        Authorization : ApiUser.getAuthToken()
+        Authorization : ApiUser.getAuthToken(),
+        "Content-Type": "application/json"
     })
 }
 
@@ -153,39 +149,27 @@ export function addReview(params) :Promise<any> {
     return sendPost(path.addReview, params)
 }
 
-export function deleteProduct(params: string) : Promise<any> {
-    return sendPost(path.deleteProduct, params, {
-        Authorization : ApiUser.getAuthToken()
-    })
-}
 
 export function deleteProductInCart(params: string) : Promise<any> {
     return sendPost(path.deleteProductInCart, params, {
-        Authorization : ApiUser.getAuthToken()
+        Authorization : ApiUser.getAuthToken(),
+        "Content-Type": "application/json"
     })
 }
 
 export function updateProductInCart(params: any) : Promise<any> {
     return sendPost(path.updateProductInCart, params, {
-        Authorization : ApiUser.getAuthToken()
+        Authorization : ApiUser.getAuthToken(),
+        "Content-Type": "application/json"
     })
 }
 
-export function addNewProduct(params: any) : Promise<any> {
-    return sendPost(path.addNewProduct, params, {
-        Authorization : ApiUser.getAuthToken()
-    })
-}
 
-export function updateProduct(params: any) : Promise<any> {
-    return sendPost(path.updateProduct, params, {
-        Authorization : ApiUser.getAuthToken()
-    })
-}
 
 export function order(params: any) : Promise<any> {
     return sendPost(path.order, params, {
-        Authorization : ApiUser.getAuthToken()
+        Authorization : ApiUser.getAuthToken(),
+        "Content-Type": "application/json"
     })
 }
 

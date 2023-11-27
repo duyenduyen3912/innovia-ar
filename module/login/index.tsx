@@ -24,16 +24,16 @@ function Login() {
             try {
                 if(data.status === "success"){
                     dispatch(loginUser({
-                        username: data.info_user[0].username,
-                        id: data.info_user[0].id,
+                        username: data.user.username,
+                        id: data.user.id,
                         jwt: data.jwt,
-                        role: data.isAdmin
+                        // role: data.isAdmin
                     }));
                     window.location.replace("/");
                 } else {
                     messageApi.open({
                         type: 'error',
-                        content: 'username or password is incorrect, please try again later',
+                        content: 'Sai username hoặc mật khẩu',
                     });
                      
                 }
@@ -54,8 +54,9 @@ function Login() {
                     if(data.status === "success") {
                         messageApi.open({
                             type: 'success',
-                            content: 'successful registration, please return to the login page',
+                            content: 'Đăng ký thành công, hãy quay lại trang đăng nhập nhé',
                         });
+
                     } else {
                         messageApi.open({
                             type: 'error',

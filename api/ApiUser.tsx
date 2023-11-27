@@ -6,8 +6,8 @@ import axios from "axios";
 
 
 const path = {
-    login: "https://chippisoft.com/API/API.php",
-    signup: "https://chippisoft.com/API/API.php",
+    login: "http://localhost:8080/login",
+    signup: "http://localhost:8080/signup",
     getUserInfor: "https://chippisoft.com/API/getUserInfor",
     
 

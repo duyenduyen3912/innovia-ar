@@ -26,20 +26,25 @@ export default function Product(props) {
       },
       onSettled: async (data:any) => {
         if(data.status === "success") {
-          console.log(data)
            message.success('Thêm sản phẩm thành công')
            queryClient.refetchQueries(['cart', ApiUser.getIdUser()])
           
-         } else {
+         } else if(data.status === "failed"){
             message.error('Có lỗi xảy ra, hãy thử lại sau!')
-         }
+         } else if(data.status === "ExpiredToken"){
+          message.error('Hết phiên đăng nhập!')
+          setTimeout(() => {
+            router.push("/login")
+          }, 2000);
+       }
+
       }
     }
   )
   const onHandleAddtocart = () => {
     if(ApiUser.getIdUser()) {
       addProductMutation.mutate({
-      iduser: ApiUser.getIdUser().toString(),
+      iduser: ApiUser.getIdUser(),
       idproduct : props.id,
       quantity : 1,
       note: ''

@@ -25,11 +25,12 @@ function Header() {
         dispatch(logoutUser())
         router.push("/login")
     } 
-    const { data : cart, refetch} = useQuery(['cart', ApiUser.getIdUser()], () => getProductInCart({iduser: ApiUser.getIdUser() }),
+    const { data : cart, refetch} = useQuery(['cart', ApiUser.getIdUser()], () => getProductInCart(ApiUser.getIdUser()),
     {
         enabled: ApiUser.getIdUser() !== null
     }
     );
+
     const handleOpenMenu = () => {
         if(isOpen) {
             setIsOpen(false)
