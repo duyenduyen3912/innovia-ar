@@ -71,11 +71,14 @@
 
     .product-rcm{
         margin-top: 30px;
+        overflow: hidden;
+        width: 100%;
         .product-item{
             display: flex;
+            width: 100%;
             padding: 20px 0;
             border-bottom: 1px solid #e0e0e0;
-            
+           
         }
         .product-img{
             width: 80px;
@@ -86,11 +89,16 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            width: calc(100% - 90px);
             font-size: 18px;
             margin-left: 20px;
         }
         .product-name{
             color: var(--textColor);
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             cursor: pointer;
             &:hover{
                 color: var(--secondary);

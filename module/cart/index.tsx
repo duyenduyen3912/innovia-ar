@@ -13,6 +13,8 @@ import { deleteProductInCart, getProductInCart, updateProductInCart } from '../.
 import { formatCurrency } from '../../constant/currencyFormatter'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { logoutUser } from '../../redux/slices/UserSlice'
+import { useDispatch } from 'react-redux'
 
 
 
@@ -36,6 +38,7 @@ interface DataType {
 export default function Cart() {
     const queryClient = useQueryClient();
     const router = useRouter()
+    const dispatch = useDispatch()
     const [cartList, setCartList] = useState([])
     const [subtotal,setSubtotal] = useState(0)
     const [totalQuantity,setTotalQuantity] = useState(0)
@@ -57,9 +60,11 @@ export default function Cart() {
                 message.error("Có lỗi xảy ra, vui lòng thử lại!")
             } else if(data.status === "ExpiredToken"){
                 message.error("Hết phiên đăng nhập, vui lòng đăng nhập lại!")
-                setTimeout(()=> {
-                    router.push("/login")
-                }, 2000)
+                dispatch(logoutUser())
+                message.warning('Bạn cần đăng nhập lại để truy cập trang này!', 5);
+                setTimeout(()=>{
+                    router.push("/login");
+                }, 5000)
             }
             refetch()
           }
@@ -73,9 +78,11 @@ export default function Cart() {
                 refetch()
             } else if(data.status === "ExpiredToken"){
                 message.error("Hết phiên đăng nhập, vui lòng đăng nhập lại!")
-                setTimeout(()=> {
-                    router.push("/login")
-                }, 2000)
+                dispatch(logoutUser())
+                message.warning('Bạn cần đăng nhập lại để truy cập trang này!', 5);
+                setTimeout(()=>{
+                    router.push("/login");
+                }, 5000)
             }  if(data.status === "failed") {
                 message.error("Có lỗi xảy ra, vui lòng thử lại sau!")
             }
@@ -107,7 +114,7 @@ export default function Cart() {
        queryClient.setQueryData('subtotal', subtotal)
        queryClient.setQueryData('product-order', productOrder)
     }
-    console.log(cart)
+
     useEffect(()=> {
         if(cart?.status === "success"){
             const newCartData = cart?.data.map((item) => {

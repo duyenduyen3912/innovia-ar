@@ -14,19 +14,8 @@ export interface IRoute {
 
 const routes: IRoute[] = [
   
-  {
-    path: "/about-us",
-    name: "About us",
-    isPrivate: false,
  
-    isUnderline: true,
-  },
-  {
-    path: "/admin",
-    name: "Admin",
-    isPrivate: true,
-    isUnderline: true,
-  },
+ 
   {
     path: "/cart",
     name: "Cart",
@@ -40,14 +29,8 @@ const routes: IRoute[] = [
     
   },
   {
-    path: "/food",
+    path: "/list-product",
     name: "Food",
-    isPrivate: false,
-    isUnderline: true,
-  },
-  {
-    path: "/juice",
-    name: "Juice",
     isPrivate: false,
     isUnderline: true,
   },
@@ -64,12 +47,6 @@ const routes: IRoute[] = [
     isUnderline: false,
   },
   {
-    path: "/our-menu",
-    name: "Our menu",
-    isPrivate: false,
-    isUnderline: true,
-  },
-  {
     path: "/product",
     name: "Product",
     isPrivate: false,
@@ -77,7 +54,7 @@ const routes: IRoute[] = [
   },
   {
     path: "/",
-    name: "Fooce",
+    name: "innovia",
     isPrivate: false,
     isUnderline: true,
   },

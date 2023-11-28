@@ -27,6 +27,9 @@ function Login() {
                         username: data.user.username,
                         id: data.user.id,
                         jwt: data.jwt,
+                        fullname: data.user.fullname,
+                        phone: data.user.phone,
+                        email: data.user.email
                         // role: data.isAdmin
                     }));
                     window.location.replace("/");
@@ -89,7 +92,7 @@ function Login() {
     const items: TabsProps['items'] = [
         {
           key: '1',
-          label: (<span className={cx("tab-header")}>Login</span>),
+          label: (<span className={cx("tab-header")}>Đăng nhập</span>),
           children: (
             <Form
                 name="basic"
@@ -105,7 +108,7 @@ function Login() {
                 <Form.Item
                 label="Username"
                 name="username"
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                rules={[{ required: true, message: 'Hãy nhập username!' }]}
                 wrapperCol={{ span: 24 }}
                 className={cx("form-label")}
                 
@@ -120,7 +123,7 @@ function Login() {
                 <Form.Item
                 label="Password"
                 name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
+                rules={[{ required: true, message: 'Hãy nhập password!' }]}
                 wrapperCol={{ span: 24 }}
                 className={cx("form-label")}
                 >
@@ -132,18 +135,18 @@ function Login() {
                 </Form.Item>
 
                 <Form.Item name="remember" valuePropName="checked" wrapperCol={{ span: 24 }} className={cx("form-label")}>
-                <Checkbox >Remember me</Checkbox>
+                <Checkbox >Nhớ mật khẩu</Checkbox>
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ span: 24 }} className={cx("btn-wrap")}>
-                <Button className= {cx("btn")} htmlType='submit' >login</Button>
+                <Button className= {cx("btn")} htmlType='submit' >Đăng nhập</Button>
                 </Form.Item>
             </Form>
           ),
         },
         {
           key: '2',
-          label: (<span className={cx("tab-header")}>Signup</span>),
+          label: (<span className={cx("tab-header")}>Đăng ký</span>),
           children:( 
           <Form
             name="basic"
@@ -162,7 +165,7 @@ function Login() {
                     {
                       required: true,
                       type: "email",
-                      message: "The input is not valid E-mail!",
+                      message: "Email không đúng định dạng!",
                     }
                     
                   ]}
@@ -175,7 +178,7 @@ function Login() {
             <Form.Item
                 label="Username"
                 name="username"
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                rules={[{ required: true, message: 'Hãy nhập username!' }]}
                 className={cx("form-label")}
                 wrapperCol={{ span: 24 }}
             >
@@ -185,7 +188,7 @@ function Login() {
             <Form.Item
                 label="Fullname"
                 name="fullname"
-                rules={[{ required: true, message: 'Please input your fullname!' }]}
+                rules={[{ required: true, message: 'Hãy nhập fullname!' }]}
                 className={cx("form-label")}
                 wrapperCol={{ span: 24 }}
             >
@@ -205,7 +208,7 @@ function Login() {
             <Form.Item
                 label="Password"
                 name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
+                rules={formRules.passwordRules}
                 wrapperCol={{ span: 24 }}
                 className={cx("form-label")}
                 >
@@ -221,14 +224,14 @@ function Login() {
                 rules={[
                 {
                     required: true,
-                    message: 'Please confirm your password!',
+                    message: 'Hãy nhập lại mật khẩu một lần nữa!',
                 },
                 ({ getFieldValue }) => ({
                     validator(_, value) {
                     if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                     }
-                    return Promise.reject(new Error('The new password that you entered do not match!'));
+                    return Promise.reject(new Error('Mật khẩu khôgn khớp!'));
                     },
                 }),
                 ]}
@@ -238,7 +241,7 @@ function Login() {
             
 
             <Form.Item wrapperCol={{ span: 24 }} className={cx("btn-wrap")}>
-                <Button className={cx("btn")} htmlType="submit">signup</Button>
+                <Button className={cx("btn")} htmlType="submit">Đăng ký</Button>
             </Form.Item>
         </Form>),
         }
@@ -248,7 +251,7 @@ function Login() {
   return (
     <>
          <Head >
-            <title>Login - Signup</title>
+            <title>Đăng ký - Đăng nhập</title>
             <meta name="description" content="Generated by create next app" />
             <link rel="icon" href="/icon.png" />
         </Head>

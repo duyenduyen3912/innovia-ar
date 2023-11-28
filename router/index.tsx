@@ -3,13 +3,14 @@ import React from "react";
 import Layout from "../module/layout/layout";
 import RouteList, {IRoute} from "./RouteList";
 import {AppProps} from "next/app";
-import ApiUser from "../api/ApiUser";
+import ApiUser, { checkToken } from "../api/ApiUser";
 import Login from "../module/login";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/slices/UserSlice";
 import { message } from "antd";
 import ApiAdmin from "../api/ApiAdmin";
+import { useQuery } from "react-query";
 
 export default function Routes({
   Component,
@@ -39,7 +40,7 @@ export default function Routes({
   const goToLogin = (): null => {
     if (typeof window !== "undefined") {
       dispatch(logoutUser())
-      message.warning('You need permission to access this page. You will be redirected to the login page!', 5);
+      message.warning('Bạn cần đăng nhập để truy cập trang này!', 5);
       setTimeout(()=>{
           router.push("/login");
       }, 5000)
@@ -48,32 +49,13 @@ export default function Routes({
     return null;
   };
   
- 
   if (isPrivateRoute()) {
     if (ApiUser.isLogin()) {
-      if(router.pathname.includes('/admin')) {
-        if(ApiAdmin.getRoleAdmin() === "1") {
-          return (
-            <>
-          
-              <Layout>
-              <Component {...pageProps} />
-            </Layout>
-            
-            </>
-            
-            
-          )
-          
-        } else return goToLogin()
-      } else {
-         return (
+        return (
           <Layout>
             <Component {...pageProps} />
           </Layout>
-      );
-      }
-     
+      ); 
     }
     return goToLogin();
   } else {
@@ -86,3 +68,4 @@ export default function Routes({
 
   
 }
+

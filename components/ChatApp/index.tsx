@@ -21,7 +21,10 @@ export default function ChatApp() {
         action: "",
         image:""
     }]);
-    const {data : answer} = useQuery(["answer", question.option_id], () => getAnswer(question.option_id))
+    const {data : answer} = useQuery(["answer", question.option_id], () => getAnswer(question.option_id), {
+        enabled: question.option_id !== ""
+    })
+   
     const list_answer = [
         {
             option_id: "chat_option_1",

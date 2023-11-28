@@ -14,6 +14,9 @@
 
 .product-name{
     font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .product-price{

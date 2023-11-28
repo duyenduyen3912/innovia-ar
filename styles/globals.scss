@@ -46,6 +46,14 @@ a {
     }
 }
 
+.ant-btn-primary {
+  background-color: var(--primary);
+}
+
+.ant-btn:hover{
+  background-color: var(--secondary);
+}
+
 .ant-pagination .ant-pagination-item-active  {
   border-color: var(--primary);
   &:hover{

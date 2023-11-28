@@ -202,12 +202,12 @@ function Header() {
                     <div className={`animate__zoomIn ${cx('user-menu')}`}>
                         <li className={cx('user-menu-item')}>
                             <Link href={'/my-account'} className={cx('item-link')}>
-                                My account
+                                Tài khoản
                             </Link>
                         </li>
                         <li className={cx('user-menu-item')}>
                             <Link href={'/login'} className={cx('item-link')} onClick={onHandleLogout}>
-                                Logout  
+                                Đăng xuất
                             </Link>
                         </li>
                        
@@ -216,7 +216,7 @@ function Header() {
                     :
                     <li className={cx("menu-item", "user-responsive")}>
                         <Link href={"/login"} className={cx("menu-item-link")} tabIndex= {0}>
-                            Login
+                            Đăng nhập
                         </Link>
                     </li>
                     }
@@ -266,12 +266,12 @@ function Header() {
              
              <li className={cx('menu-responsive-item')}>
                  <Link href={'/my-account'} className={cx('menu-responsive-link')}>
-                     My account
+                     Tài khoản
                  </Link>
              </li>
              <li className={cx('menu-responsive-item')}>
                      <Link href={'/login'} className={cx('item-link')} onClick={onHandleLogout}>
-                         {ApiUser.isLogin() ? "Logout" : "Login"}
+                         {ApiUser.isLogin() ? "Đăng xuất" : "Đăng nhập"}
                      </Link>
              </li>
              

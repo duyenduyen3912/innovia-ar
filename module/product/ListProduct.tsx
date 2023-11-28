@@ -8,12 +8,13 @@ import Product from '../../components/product'
 import { DollarCircleOutlined, MehOutlined, SearchOutlined } from '@ant-design/icons'
 import Search from 'antd/es/input/Search'
 import { useMutation, useQuery } from 'react-query'
-import { getAllProduct, searchAllProduct, getProductList, IProductItem, getCategory, getProductByCategory } from '../../api/ApiProduct'
+import { getAllProduct, searchAllProduct, IProductItem, getCategory, getProductByCategory, getPopularProduct } from '../../api/ApiProduct'
 import { formatCurrency } from '../../constant/currencyFormatter'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import store from '../../redux/store'
 import Loading from '../../components/loading'
+import Link from 'next/link'
 
 function routerProcess(string) {
   const secondCharacter = string.charAt(1).toUpperCase();
@@ -28,7 +29,6 @@ export default function ListProduct() {
   const {search} = store.getState();
   const router = useRouter()
   const path = router.pathname
-  const [pathName, setPathName] = useState('')
   const [inputValue, setInputValue] = useState(200000);
   const [sortValue, setSortValue] = useState('rating')
   const [currentPage, setCurrentPage] = useState('1');
@@ -36,7 +36,7 @@ export default function ListProduct() {
   const [category, setCategory] = useState("")
   const [isRender, setIsRender] = useState(false)
   const {data: ListCategory} = useQuery(['category'], () => getCategory())
- 
+  const {data: popularProduct} = useQuery(['popularProduct'], () => getPopularProduct())
   const handleChange = (value: string) => {
     setSortValue(value)
     if(value === 'low'){
@@ -100,8 +100,7 @@ export default function ListProduct() {
     }
     
   }, [isRender])
-  console.log(isRender)
-  
+
   return (
     <>
          <Head >
@@ -280,28 +279,22 @@ export default function ListProduct() {
                 <div className={cx('filter-price')}>
                   Sản phẩm phổ biến
                 </div>
-                <div className={cx("product-item")}>
-                  <Image src={require("../../assets/imgs/kitchenroom.png").default.src} preview={false} className={cx("product-img")}/>
-                  <div className={cx("product-detail")}>
-                    <div className={cx("product-name")}>Ghế nhà ăn</div>
-                    <div className={cx("product-price")}>{formatCurrency(50000)}{" "} VNĐ</div>
-                  </div>
-                </div>  
-                <div className={cx("product-item")}>
-                  <Image src={require("../../assets/imgs/kitchenroom.png").default.src} preview={false} className={cx("product-img")}/>
-                  <div className={cx("product-detail")}>
-                    <div className={cx("product-name")}>Ghế nhà ăn</div>
-                    <div className={cx("product-price")}>{formatCurrency(50000)}{" "} VNĐ</div>
-                  </div>
-                </div>  
-                <div className={cx("product-item")}>
-                  <Image src={require("../../assets/imgs/kitchenroom.png").default.src} preview={false} className={cx("product-img")}/>
-                  <div className={cx("product-detail")}>
-                    <div className={cx("product-name")}>Ghế nhà ăn</div>
-                    <div className={cx("product-price")}>{formatCurrency(50000)}{" "} VNĐ</div>
-                  </div>
-                </div>  
-                 
+                {
+                  popularProduct?.data.map((item, index)=> {
+                    const image = item.image.split(";")
+                    return (
+                      <div className={cx("product-item")} key={index}>
+                        <Image src={image[0]} preview={false} className={cx("product-img")}/>
+                        <div className={cx("product-detail")}>
+                          <Link href={`/product/${item.id}`}>
+                            <div className={cx("product-name")}>{item.name}</div>
+                          </Link>
+                          <div className={cx("product-price")}>{formatCurrency(item.price)}{" "} VNĐ</div>
+                        </div>
+                      </div>  
+                    )
+                  })
+                }
               </div>
               
               </Col>

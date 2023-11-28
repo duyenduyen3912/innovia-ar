@@ -102,7 +102,9 @@ const path = {
     order: 'http://localhost:8080/order',
     getPopularProduct: 'http://localhost:8080/selectBestSellingProduct',
     getOrderList: 'http://localhost:8080/selectOrderList',
-    getOrderItem: 'http://localhost:8080/selectOrderItem'
+    getOrderItem: 'http://localhost:8080/selectOrderItem',
+    deleteOrderItem: 'http://localhost:8080/cancelOrder',
+    
 }
 
 
@@ -122,6 +124,10 @@ export function getCategory(): Promise<IDataRes> {
     return sendGet(path.getCategory)
 }
 
+export function getPopularProduct(): Promise<any> {
+    return sendGet(path.getPopularProduct)
+}
+
 export function searchAllProduct(params, body) {
     return sendPost(path.searchAllProduct + params, body, {
         "Content-Type": "application/json"
@@ -132,12 +138,20 @@ export function getAllProduct(params) {
     return sendGet(path.getAllProduct+params)
 }
 
+export function getOrderItem(params): Promise<any> {
+    return sendPost(path.getOrderItem, params, {
+        Authorization : ApiUser.getAuthToken(),
+        "Content-Type": "application/json"
+    })
+}
+
 export function getProductInCart(params): Promise<any> {
     return sendPost(path.getProductInCart, params, {
         Authorization : ApiUser.getAuthToken(),
         "Content-Type": "application/json"
     })
 }
+
 
 export function addProductToCart(params :IAddProductToCart): Promise<any> {
     return sendPost(path.addToCart, params, {
@@ -172,5 +186,21 @@ export function order(params: any) : Promise<any> {
         "Content-Type": "application/json"
     })
 }
+
+export function getListOrder(params: any) : Promise<any> {
+    return sendPost(path.getOrderList, params, {
+        Authorization : ApiUser.getAuthToken(),
+        "Content-Type": "application/json"
+    })
+}
+
+export function cancelOrder(params: any) : Promise<any> {
+    return sendPost(path.deleteOrderItem, params, {
+        Authorization : ApiUser.getAuthToken(),
+        "Content-Type": "application/json"
+    })
+}
+
+
 
 
