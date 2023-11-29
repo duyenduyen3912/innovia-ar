@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Col, Collapse, InputNumber, message, Rate, Row, Button, Pagination, Form } from 'antd';
 import { Image as ImageAnt } from 'antd'
 import style from "./ProductDetail.module.scss"
@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import PageTitle from '../../components/PageTitle';
 import RecommendProduct from '../../components/RecommendProduct';
 import FormItem from 'antd/es/form/FormItem';
+import ModelViewer from '../../components/Ar/ModelViewer';
 
 const cx = classNames.bind(style)
 
@@ -24,6 +25,7 @@ export default function ProductDetail() {
     const [quantity,setQuantity] = useState(1)
     const [currentPage, setCurrentPage] = useState('1')
     const [isReview, setIsReview] = useState(false)
+    const [isOpenModel, setIsOpenModel] = useState(false)
     const queryClient = useQueryClient()
     const cart = queryClient.getQueryData(['cart', ApiUser.getIdUser()])
     const { isLoading, isError, isFetching, data, error } = useQuery(['product', id], () => getProductID(`${id}`),
@@ -96,6 +98,12 @@ export default function ProductDetail() {
             router.push("/login")
         }
     }
+    const onHandleOpenModel = () => {
+        setIsOpenModel(true);
+    }
+    const onCloseModal = useCallback(() => {
+        setIsOpenModel(false);
+    }, [setIsOpenModel]);
     
   
     return (
@@ -173,7 +181,8 @@ export default function ProductDetail() {
                             min={1} max={10} 
                             defaultValue={1}
                             className={cx("input-number")} />
-                        <Button onClick={onHandleAddtocart} className={cx("order-btn")}>Thêm vào giỏ hàng</Button>
+                        <Button onClick={onHandleOpenModel} className={cx("order-btn", "try-btn")}>Dùng thử</Button>
+                        <Button onClick={onHandleAddtocart} className={cx("order-btn")}>Thêm vào giỏ</Button>
                     </div>
                     
                 </Col>
@@ -272,6 +281,13 @@ export default function ProductDetail() {
           
             </Row>
             <RecommendProduct category={data?.data[0].category} id = {data?.data[0].id} />
+            <ModelViewer 
+                open={isOpenModel} 
+                close={onCloseModal} 
+                name={data?.data[0].name} 
+                modelUrl='https://chippisoft.com/models_product/furniture_pack_for_summer_caffe_free.glb'
+                
+            />
         </>
     )
 }

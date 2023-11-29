@@ -1,0 +1,31 @@
+.model-viewer{
+    position: relative;
+    width: 600px !important;
+}
+
+// .canvas{
+//     height: 400px !important;
+//     width: 100% !important;
+// }
+
+// .canvas > div > canvas {
+//     height: 400px !important;
+//     width: 400px !important;
+// }
+
+.bottom{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.texture{
+    
+}
+
+.texture-img{
+    cursor: pointer;
+    width: 30px !important;
+    height: 30px !important;
+    object-fit: cover;
+}
