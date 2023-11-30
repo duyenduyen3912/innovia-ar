@@ -24,8 +24,6 @@ export default function RecommendProduct(props) {
     useEffect(()=> {
         if(categoryProduct) {
             if(categoryProduct.status) {
-                console.log(categoryProduct)
-                console.log(props.id)
                 categoryProduct.data.map((item, index) => {
                     if(item.id === props.id){
                        categoryProduct.data.splice(index,1) 

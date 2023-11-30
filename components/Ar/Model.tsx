@@ -6,7 +6,7 @@ import * as THREE from "three";
 const Model = ({ modelUrl, textureUrl }, ref) => {
     const modelRef = useRef<Object3D>();
     const gltf: GLTF = useLoader(GLTFLoader, modelUrl);
-    const [scale, setScale] = useState(1);
+    const [scale, setScale] = useState(6);
     const handleWheelPreventDefault = (event) => {
       if (scale >= 0.5) {
         event.preventDefault();
@@ -14,16 +14,27 @@ const Model = ({ modelUrl, textureUrl }, ref) => {
     };
     useEffect(() => {
       const textureLoader = new TextureLoader();
-      const newTexture = textureLoader.load("https://thuvienlee.com/wp-content/uploads/2021/07/go-go-do-1.jpg");
+      const newTexture = textureLoader.load(textureUrl);
+
+      const darkerColor = new THREE.Color(0.2, 0.2, 0.2); // Điều chỉnh giá trị màu sắc tối hơn ở đây
+
       gltf.scene.traverse((node) => {
         if (!node.isMesh) return;
+
         if (node.material) {
-          const newMaterial = new THREE.MeshBasicMaterial({ map: newTexture });
-          newMaterial.color.copy(node.material.color);
+          const newMaterial = new THREE.MeshBasicMaterial({
+            map: newTexture,
+            color: darkerColor, 
+            emissive: darkerColor
+          });
           newMaterial.opacity = node.material.opacity;
           node.material = newMaterial;
         } else {
-          node.material = new THREE.MeshBasicMaterial({ map: newTexture });
+          node.material = new THREE.MeshBasicMaterial({
+            map: newTexture,
+            color: darkerColor, 
+            emissive: darkerColor
+          });
         }
       });
     }, [textureUrl]);
@@ -37,15 +48,8 @@ const Model = ({ modelUrl, textureUrl }, ref) => {
             }
             });
         return (
-            <mesh ref={modelRef} scale={[10, 10, 10]}> 
+            <mesh ref={modelRef} scale={[scale, scale, scale]}> 
                 <primitive object={gltf.scene} onWheel={handleWheel}/> 
-                {/* <meshStandardMaterial
-                  attach="material"
-                  color="gray"
-                  roughness={0.5}
-                  metalness={0.5}
-                  shadowSide={THREE.DoubleSide}
-                /> */}
             </mesh>);
     }
     const handleWheel = (event) => {

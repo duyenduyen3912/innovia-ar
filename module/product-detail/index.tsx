@@ -165,7 +165,7 @@ export default function ProductDetail() {
 
                         <div className={cx("infor-wrap")}>
                             <span className={cx("infor-title")}>Danh mục:</span>
-                            <span className={cx("infor-text")}>{data?.data[0].category}</span>
+                            <span className={cx("infor-text")}>{data?.data[0].category_name}</span>
                         </div>
                         <div className={cx("infor-wrap")}>
                             <span className={cx("infor-title")}>Loại:</span>
@@ -181,7 +181,7 @@ export default function ProductDetail() {
                             min={1} max={10} 
                             defaultValue={1}
                             className={cx("input-number")} />
-                        <Button onClick={onHandleOpenModel} className={cx("order-btn", "try-btn")}>Dùng thử</Button>
+                        { data?.data[0].model && <Button onClick={onHandleOpenModel} className={cx("order-btn", "try-btn")}>Dùng thử</Button> }
                         <Button onClick={onHandleAddtocart} className={cx("order-btn")}>Thêm vào giỏ</Button>
                     </div>
                     
@@ -280,14 +280,16 @@ export default function ProductDetail() {
                 </Collapse>
           
             </Row>
-            <RecommendProduct category={data?.data[0].category} id = {data?.data[0].id} />
-            <ModelViewer 
-                open={isOpenModel} 
-                close={onCloseModal} 
-                name={data?.data[0].name} 
-                modelUrl='https://chippisoft.com/models_product/furniture_pack_for_summer_caffe_free.glb'
-                
-            />
+            <RecommendProduct category={data?.data[0].category_name} id = {data?.data[0].id} />
+            {data?.data[0].model && 
+                <ModelViewer 
+                    open={isOpenModel} 
+                    close={onCloseModal} 
+                    name={data?.data[0].name} 
+                    modelUrl={data?.data[0].model}
+                    
+                />
+            }
         </>
     )
 }

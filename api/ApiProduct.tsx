@@ -18,7 +18,9 @@ export interface IProductItem {
         price: number,
         size: string,
         tag: "Bộ" | "Đơn",
-        weight: string
+        weight: string,
+        category_name: string,
+        model: string
     }]
 
 }
@@ -90,6 +92,7 @@ export interface IDataRes {
 const path = {
     getAllProduct: 'http://localhost:8080/products?page=',
     getAllProductByCategory: 'http://localhost:8080/GetProductByCategory?category=',
+    getAllProductByCategoryRCM: 'http://localhost:8080/GetProductByCategoryRCM?category=',
     searchAllProduct: 'http://localhost:8080/search?page=',
     getProductID: 'http://localhost:8080/DProduct?id=',
     getProductInCart: 'http://localhost:8080/selectCart',
@@ -115,6 +118,7 @@ export function getProductID(params: string): Promise<IProductItem> {
 export function getProductByCategory(params): Promise<IProductItem> {
     return sendGet(path.getAllProductByCategory + params.category + '&page=' + params.page)
 }
+
 
 export function getComment(params): Promise<IComment> {
     return sendGet(path.getComment + params.idproduct + '&page=' + params.page)
