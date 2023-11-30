@@ -9,10 +9,9 @@ export default function PageTitle(prop) {
   return (
     <div className={cx("page-title")}>
         <Image 
-          src={prop.img} 
+          src={prop.img ? prop.img : require("../../assets/imgs/page-bg.png").default.src} 
           alt="title-background" 
           className={cx("image")} 
-          fallback={require("../../assets/imgs/page-bg.png").default.src}
           preview={false}
         />
         <div className={cx("overlay")}></div>

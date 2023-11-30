@@ -24,11 +24,7 @@ export default function ModelViewer({open, close, name, modelUrl}) {
     const onSelectTexture = (textureSelected) => {
         setTextureUrl(textureSelected)
     }
-    useEffect(() => {
-        const canvas = document.getElementById("canvas")
-        console.log(canvas)
-        console.log(canvas)
-    }, [])
+    
   return (
     <Modal title={name} visible={open} onOk={close} onCancel={close} className={cx('model-viewer')} >
       <Canvas 
@@ -50,7 +46,14 @@ export default function ModelViewer({open, close, name, modelUrl}) {
       <mesh>
           <meshStandardMaterial />
         </mesh>
-        <Model modelUrl={modelUrl} ref={modelRef} textureUrl={textureUrl}/>
+        <Model 
+            modelUrl={modelUrl} 
+            ref={modelRef} 
+            textureUrl={textureUrl}
+            modelPosition={[5, 0, 5]} 
+            cameraLookAt={[0, 0, 0]} 
+         
+        />
     </Canvas>
         <div className={cx("bottom")}>
             <div>
