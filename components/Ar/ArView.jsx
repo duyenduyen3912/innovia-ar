@@ -1,16 +1,14 @@
 import React from 'react'
 import '@google/model-viewer';
-export default function ArView() {
+export default function ArView({modelUrl}) {
   return (
     <div>
         <model-viewer
-            src='https://chippisoft.com/models_product/shafa.glb'
-            // ios-src={../Link/To/Model.usdz}
+            src={modelUrl}
             alt='model name'
             ar={true}
             loading='lazy'
             camera-controls={true}
-            // poster={../Link/To/Image.png}
             autoplay={true}>
         </model-viewer>
     </div>

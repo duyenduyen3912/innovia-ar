@@ -26,7 +26,6 @@ export default function ModelViewer({open, close, name, modelUrl}) {
     }
   return (
     <Modal title={name} visible={open} onOk={close} onCancel={close} className={cx('model-viewer')} >
-      
       <Canvas 
         camera={{
         position: [0, 4, -2],
@@ -34,22 +33,22 @@ export default function ModelViewer({open, close, name, modelUrl}) {
         far: 200,
         }}
         className={cx('canvas')}
-        style={{ width: '100%', height: '300px'}}
+        style={{ width: '100%', height: '100%' }}
+        gl={{ pixelRatio: window.devicePixelRatio, forceResize: true, antialias: true, alpha: true}}
         >
       <ambientLight intensity={1.0} />
       <pointLight position={[0, 4, 6]} castShadow />
-      <directionalLight intensity={0.5} position={[0, 0, 5]} />
+      <directionalLight intensity={1.0} position={[0, 0, 5]} />
       <OrbitControls  />
       <mesh>
-          {/*<boxBufferGeometry />*/}
           <meshStandardMaterial />
         </mesh>
         <Model modelUrl={modelUrl} ref={modelRef} textureUrl={textureUrl}/>
-        
-        </Canvas>
+    </Canvas>
         <div className={cx("bottom")}>
             <div>
-                <ArView />
+                <div>Sử dụng tính năng AR tại dây</div>
+                <ArView modelUrl={modelUrl}/>
             </div>
             <div className={cx("texture")}>
                 <div style={{textAlign: 'end', marginBottom:'10px'}}>Đổi màu sản phẩm tại đây</div>

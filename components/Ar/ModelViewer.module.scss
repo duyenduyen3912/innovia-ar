@@ -1,6 +1,7 @@
 .model-viewer{
     position: relative;
     width: 600px !important;
+    height: 500px !important;
 }
 
 // .canvas{
@@ -8,10 +9,10 @@
 //     width: 100% !important;
 // }
 
-// .canvas > div > canvas {
-//     height: 400px !important;
-//     width: 400px !important;
-// }
+.canvas > div > canvas {
+    height: 100% !important;
+    width: 100% !important;
+}
 
 .bottom{
     margin-top: 20px;
