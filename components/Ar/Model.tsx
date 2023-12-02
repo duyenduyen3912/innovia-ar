@@ -38,7 +38,6 @@ const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt }, ref) => {
         useFrame(() => {
             if (modelRef.current) {
                 modelRef.current.position.set(0, 0, 0); 
-                modelRef.current.rotation.y += 0.005;
                 modelRef.current.scale.set(1, 1, 1);  
             }
             });

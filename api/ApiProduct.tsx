@@ -107,7 +107,7 @@ const path = {
     getOrderList: 'http://localhost:8080/selectOrderList',
     getOrderItem: 'http://localhost:8080/selectOrderItem',
     deleteOrderItem: 'http://localhost:8080/cancelOrder',
-    
+    keywordRecommend: "http://localhost:8080/api/suggest-products?query="
 }
 
 
@@ -122,6 +122,10 @@ export function getProductByCategory(params): Promise<IProductItem> {
 
 export function getComment(params): Promise<IComment> {
     return sendGet(path.getComment + params.idproduct + '&page=' + params.page)
+}
+
+export function getRecommend(params): Promise<String[]> {
+    return sendGet(path.keywordRecommend + params)
 }
 
 export function getCategory(): Promise<IDataRes> {

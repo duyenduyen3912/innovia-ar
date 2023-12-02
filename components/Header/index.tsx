@@ -11,7 +11,7 @@ import ApiUser from "../../api/ApiUser";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { getProductInCart } from "../../api/ApiProduct";
+import { getProductInCart, getRecommend } from "../../api/ApiProduct";
 import { dataSearch } from "../../redux/slices/SearchSlice";
 const cx = classNames.bind(style)
 
@@ -19,7 +19,7 @@ function Header() {
     const router = useRouter()
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false)
-    const [isOpenSearch, setIsOpenSearch] = useState(false)
+    const [keyword, setKeyword] = useState('');
     const [totalQuantity, setTotalQuantity] = useState(0)
     const onHandleLogout = () =>{
         dispatch(logoutUser())
@@ -30,6 +30,9 @@ function Header() {
         enabled: ApiUser.getIdUser() !== null
     }
     );
+    const {data: rcm_list} = useQuery(['rcm', keyword], () => getRecommend(keyword), {
+        enabled: keyword !== ""
+    })
 
     const handleOpenMenu = () => {
         if(isOpen) {
@@ -45,11 +48,13 @@ function Header() {
         document.getElementById("search-input").classList.toggle(cx("open"))
     }
     const handleSearch = (event) => {
-        if(event.key === 'Enter'){
+        if(event.key === 'Enter' || typeof event === "string"){
             router.push(`/search?keyword=${event.target.value}`)
             dispatch(dataSearch(event.target.value))
-        }
+            setKeyword('')
+        } 
     }
+    
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -117,7 +122,7 @@ function Header() {
             setTotalQuantity(totalQuantity)
         }
     }, [cart])
-
+    
     return (
         <>
         <div className={cx("header")} id="header">
@@ -232,17 +237,32 @@ function Header() {
                 
                 </Col>
             </Row>
-           <div className={cx("input-search-wrap")} id="search-input">
-            <div className={cx("input-wrap")}>
-                <input type={"text"} className={cx("input-search")} onKeyDown={handleSearch}/>
-                <input type="file" id="customFileInput" style={{display: "none"}} onChange={handleSearchByImage} />
-                <label htmlFor={"customFileInput"} id="customFileLabel">
-                    <CameraOutlined style={{ fontSize: '24px', color: '#a58838', fontWeight: '600', cursor: 'pointer' }}/>
-                </label>
-                
+            <div className={cx("input-search-wrap")} id="search-input">
+                <div className={cx("input-wrap")}>
+                    <input 
+                        id="input"
+                        type={"text"} 
+                        className={cx("input-search")} 
+                        onKeyDown={handleSearch}
+                        onChange={(e) => setTimeout(()=>{setKeyword(e.target.value)}, 500)}
+                    />
+                    <input type="file" id="customFileInput" style={{display: "none"}} onChange={handleSearchByImage} />
+                    <label htmlFor={"customFileInput"} id="customFileLabel">
+                        <CameraOutlined style={{ fontSize: '24px', color: '#a58838', fontWeight: '600', cursor: 'pointer' }}/>
+                    </label>
+                </div>
+                {rcm_list?.length !== 0 ? 
+                <div className={cx("keyword-rcm")} id="rcm-block">
+                    {rcm_list?.map((item) => {
+                        return (
+                            <div className={cx("keyword")} onClick={() => handleSearch(item)}>
+                                {item}
+                            </div>
+                        )
+                    })}
+                </div> 
+                : null}
             </div>
-                
-           </div>
         </div>
         <div className={`animate__animated animate__slideInDown ${cx('menu-responsive')}`} id="menuResponsive">
          <div className={cx('menu')}>
