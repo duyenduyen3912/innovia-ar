@@ -4,7 +4,6 @@ import { Col, Collapse, InputNumber, message, Rate, Row, Button, Pagination, For
 import { Image as ImageAnt } from 'antd'
 import style from "./ProductDetail.module.scss"
 import classNames from 'classnames/bind';
-
 import { DollarCircleOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import Product from '../../components/product';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -14,7 +13,7 @@ import ApiUser from '../../api/ApiUser';
 import { useRouter } from 'next/router';
 import PageTitle from '../../components/PageTitle';
 import RecommendProduct from '../../components/RecommendProduct';
-import FormItem from 'antd/es/form/FormItem';
+import '@google/model-viewer';
 import ModelViewer from '../../components/Ar/ModelViewer';
 
 const cx = classNames.bind(style)
@@ -26,6 +25,7 @@ export default function ProductDetail() {
     const [currentPage, setCurrentPage] = useState('1')
     const [isReview, setIsReview] = useState(false)
     const [isOpenModel, setIsOpenModel] = useState(false)
+    const [urlModel, setUrlModel] = useState('')
     const queryClient = useQueryClient()
     const cart = queryClient.getQueryData(['cart', ApiUser.getIdUser()])
     const { isLoading, isError, isFetching, data, error } = useQuery(['product', id], () => getProductID(`${id}`),
@@ -104,8 +104,12 @@ export default function ProductDetail() {
     const onCloseModal = useCallback(() => {
         setIsOpenModel(false);
     }, [setIsOpenModel]);
-    
-    
+    useEffect(()=>{
+        if(data) {
+            setUrlModel(data?.data[0].model)
+        }
+    }, [data])
+    console.log(urlModel)
     return (
         <>
             <Head >
@@ -281,7 +285,7 @@ export default function ProductDetail() {
           
             </Row>
             <RecommendProduct category={data?.data[0].category_name} id = {data?.data[0].id} />
-            {data?.data[0].model && 
+            
                 <ModelViewer 
                     open={isOpenModel} 
                     close={onCloseModal} 
@@ -289,7 +293,7 @@ export default function ProductDetail() {
                     modelUrl={data?.data[0].model}
                     
                 />
-            }
+            
         </>
     )
 }

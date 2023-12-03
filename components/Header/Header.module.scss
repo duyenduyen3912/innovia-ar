@@ -159,13 +159,12 @@
     color: var(--textColor);
 }
 
-// .search-input:focus-within .keyword-rcm {
-//     display: block;
-// }
 
-#input:focus-visible {
-    color: aqua;
+.input-search-wrap:focus-within .keyword-rcm {
+    display: block;
+    animation: slideDown 0.15s ease;
 }
+
 
 .input-wrap{
     width: 45%;

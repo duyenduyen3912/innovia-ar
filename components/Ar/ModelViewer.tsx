@@ -7,6 +7,7 @@ import { CameraHelper } from 'three';
 import { Image, Modal } from 'antd';
 import Model from './Model';
 import ArView from './ArView';
+import '@google/model-viewer';
 
 
 const cx = classNames.bind(style)
@@ -58,7 +59,7 @@ export default function ModelViewer({open, close, name, modelUrl}) {
         <div className={cx("bottom")}>
             <div>
                 <div>Sử dụng tính năng AR tại dây</div>
-                {window !== undefined && <ArView modelUrl={modelUrl} />}
+                <ArView modelUrl={modelUrl ? modelUrl : ''} />
             </div>
             <div className={cx("texture")}>
                 <div style={{textAlign: 'end', marginBottom:'10px'}}>Đổi màu sản phẩm tại đây</div>

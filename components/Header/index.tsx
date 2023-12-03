@@ -48,11 +48,14 @@ function Header() {
         document.getElementById("search-input").classList.toggle(cx("open"))
     }
     const handleSearch = (event) => {
-        if(event.key === 'Enter' || typeof event === "string"){
+        if(typeof event === "string") {
+            router.push(`/search?keyword=${event}`)
+            dispatch(dataSearch(event)) 
+        } else if(event.key === 'Enter'){
             router.push(`/search?keyword=${event.target.value}`)
-            dispatch(dataSearch(event.target.value))
-            setKeyword('')
-        } 
+            dispatch(dataSearch(event.target.value)) 
+        }
+        setKeyword('')
     }
     
     const toBase64 = file => new Promise((resolve, reject) => {
@@ -240,7 +243,7 @@ function Header() {
             <div className={cx("input-search-wrap")} id="search-input">
                 <div className={cx("input-wrap")}>
                     <input 
-                        id="input"
+                        id="input-search"
                         type={"text"} 
                         className={cx("input-search")} 
                         onKeyDown={handleSearch}
