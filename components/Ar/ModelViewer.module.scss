@@ -4,10 +4,9 @@
     height: 500px !important;
 }
 
-// .canvas{
-//     height: 400px !important;
-//     width: 100% !important;
-// }
+.canvas{
+    flex: 2;
+}
 
 .canvas > div > canvas {
     height: 100% !important;
@@ -21,7 +20,8 @@
 }
 
 .texture{
-    
+    flex: 3;
+    text-align: end;
 }
 
 .texture-img{

@@ -7,13 +7,12 @@ import classNames from 'classnames/bind';
 import { DollarCircleOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import Product from '../../components/product';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { addProductToCart, addReview, getComment, getProductID, IAddProductToCart } from '../../api/ApiProduct';
+import { addProductToCart, addReview, getComment, getProductID, IAddProductToCart, checkReview } from '../../api/ApiProduct';
 import { formatCurrency } from '../../constant/currencyFormatter';
 import ApiUser from '../../api/ApiUser';
 import { useRouter } from 'next/router';
 import PageTitle from '../../components/PageTitle';
 import RecommendProduct from '../../components/RecommendProduct';
-import '@google/model-viewer';
 import ModelViewer from '../../components/Ar/ModelViewer';
 
 const cx = classNames.bind(style)
@@ -36,6 +35,12 @@ export default function ProductDetail() {
     const {data: review, refetch} = useQuery(['review', currentPage], () => getComment({
         idproduct: `${id}`,
         page: currentPage
+    }), {
+        enabled: id != undefined
+    })
+    const {data: checkOrder} = useQuery(['check_review', id], () => checkReview({
+        idproduct: `${id}`,
+        iduser: ApiUser.getIdUser() ? ApiUser.getIdUser() : 0
     }), {
         enabled: id != undefined
     })
@@ -78,9 +83,10 @@ export default function ProductDetail() {
         addReviewMutation.mutate({
             idproduct: `${id}`,
             star: values.star,
-            comment: values.comment
+            comment: values.comment,
+            iduser: ApiUser.getIdUser()
         })
-        setIsReview(true)
+        setIsReview(false)
     }
     
     
@@ -108,8 +114,11 @@ export default function ProductDetail() {
         if(data) {
             setUrlModel(data?.data[0].model)
         }
-    }, [data])
-    console.log(urlModel)
+        if (checkOrder){
+                setIsReview(true)
+                console.log("ok")
+        } 
+    }, [data, checkOrder])
     return (
         <>
             <Head >
@@ -249,7 +258,7 @@ export default function ProductDetail() {
                             }
                             
                         </div>
-                        {!isReview ? 
+                        {isReview === true ? 
                             <div className={cx("your-review")}>
                             <div className={cx("your-review-title")}>Thêm đánh giá</div>
                                 <Form onFinish={onHandleSubmit}>

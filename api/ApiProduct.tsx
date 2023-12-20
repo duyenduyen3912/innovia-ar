@@ -100,6 +100,7 @@ const path = {
     getCategory: 'http://localhost:8080/Category',
     addToCart : 'http://localhost:8080/addToCart',
     addReview: 'http://localhost:8080/addReview',
+    checkReview: 'http://localhost:8080/checkReview?idproduct=',
     deleteProductInCart: 'http://localhost:8080/deleteCart',
     updateProductInCart: 'http://localhost:8080/updateCart',
     order: 'http://localhost:8080/order',
@@ -167,8 +168,12 @@ export function addProductToCart(params :IAddProductToCart): Promise<any> {
     })
 }
 
-export function addReview(params) :Promise<any> {
+export function addReview(params) :Promise<String> {
     return sendPost(path.addReview, params)
+}
+
+export function checkReview(params) :Promise<any> {
+    return sendGet(path.checkReview+ params.idproduct+ '&iduser='+ params.iduser)
 }
 
 

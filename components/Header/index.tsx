@@ -48,6 +48,7 @@ function Header() {
         document.getElementById("search-input").classList.toggle(cx("open"))
     }
     const handleSearch = (event) => {
+        console.log(event)
         if(typeof event === "string") {
             router.push(`/search?keyword=${event}`)
             dispatch(dataSearch(event)) 
@@ -66,11 +67,9 @@ function Header() {
     });
 
     function processBase64Data(base64String) {
-        const prefix = "data:image/png;base64,"; // Thay đổi tiền tố tùy theo loại tệp ảnh
-        const withoutPrefix = base64String.startsWith(prefix) ? base64String.slice(prefix.length) : base64String;
-    
-        // Sử dụng biểu thức chính quy để loại bỏ các ký tự đệm '=' ở cuối chuỗi
-        const base64DataWithoutPadding = withoutPrefix.replace(/=+$/, '');
+        const restOfString = base64String.slice(base64String.indexOf(";base64,") + 8);
+        
+        const base64DataWithoutPadding = restOfString.replace(/=+$/, '');
     
         return base64DataWithoutPadding;
     }

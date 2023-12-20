@@ -7,19 +7,23 @@ import { CameraHelper } from 'three';
 import { Image, Modal } from 'antd';
 import Model from './Model';
 import ArView from './ArView';
-import '@google/model-viewer';
+
 
 
 const cx = classNames.bind(style)
 export default function ModelViewer({open, close, name, modelUrl}) {
     const modelRef = useRef();
-    const [textureUrl, setTextureUrl] = useState();
+    const [textureUrl, setTextureUrl] = useState("reset");
+    const [gltfModel, setGltfModel] = useState();
     const texture = [
-        "https://chippisoft.com/image/white.jpg",
-        "https://chippisoft.com/image/grey.png",
+        "reset",
+        "https://chippisoft.com/image/sofa3.jpg",
+        "https://chippisoft.com/image/sofa4.jpg",
+        "https://chippisoft.com/image/sofa5.jpg",
         "https://chippisoft.com/image/sofa.jpg",
-        "https://chippisoft.com/image/sofa2.jpg",
         "https://chippisoft.com/image/go.jpg",
+        "https://chippisoft.com/image/go3.png",
+        "https://chippisoft.com/image/go4.png",
         "https://chippisoft.com/image/go2.jpg",       
     ]
     const onSelectTexture = (textureSelected) => {
@@ -28,46 +32,50 @@ export default function ModelViewer({open, close, name, modelUrl}) {
     
   return (
     <Modal title={name} visible={open} onOk={close} onCancel={close} className={cx('model-viewer')} >
-      <Canvas 
-        camera={{
-        position: [0, 0, 5],
-        near: 0.001,
-        far: 200,
-        }}
-        className={cx('canvas')}
-        id="canvas"
-        style={{ width: '100%', height: '100%' }}
-        pixelRatio={window.devicePixelRatio}
-        gl={{ pixelRatio: window.devicePixelRatio, forceResize: true, antialias: true, alpha: true}}
-        >
-      <ambientLight intensity={1.0} />
-      <pointLight position={[0, 4, 6]} castShadow />
-      <directionalLight intensity={1.0} position={[0, 0, 5]} />
-      <OrbitControls  />
-      <mesh>
-          <meshStandardMaterial />
-        </mesh>
-        <Model 
-            modelUrl={modelUrl} 
-            ref={modelRef} 
-            textureUrl={textureUrl}
-            modelPosition={[5, 0, 5]} 
-            cameraLookAt={[0, 0, 0]} 
-         
-        />
-    </Canvas>
+        <div style={{margin: '20px 0'}}>
+            <ArView modelUrl={modelUrl ? modelUrl : ''}  gltfModel={gltfModel}/>
+        </div>
         <div className={cx("bottom")}>
-            <div>
-                <div>Sử dụng tính năng AR tại dây</div>
-                <ArView modelUrl={modelUrl ? modelUrl : ''} />
-            </div>
+            <Canvas 
+                camera={{
+                position: [0, 0, 5],
+                near: 0.001,
+                far: 200,
+                }}
+                className={cx('canvas')}
+                id="canvas"
+                style={{ width: '100%', height: '100%' }}
+                pixelRatio={window.devicePixelRatio}
+                gl={{ pixelRatio: window.devicePixelRatio, forceResize: true, antialias: true, alpha: true}}
+                >
+            <ambientLight intensity={1.0} />
+            <pointLight position={[0, 4, 6]} castShadow />
+            <directionalLight intensity={1.0} position={[0, 0, 5]} />
+            <OrbitControls  />
+        
+                <Model 
+                    modelUrl={modelUrl} 
+                    ref={modelRef} 
+                    textureUrl={textureUrl}
+                    modelPosition={[5, 0, 5]} 
+                    cameraLookAt={[0, 0, 0]} 
+                    setGltfModel={setGltfModel}
+                />
+            </Canvas>
             <div className={cx("texture")}>
                 <div style={{textAlign: 'end', marginBottom:'10px'}}>Đổi màu sản phẩm tại đây</div>
                 {
                     texture.map((item) => {
-                        return (
-                            <Image src={item} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
-                        )
+                        if(item === "reset") {
+                            return (
+                                <Image src={require("../../assets/imgs/reset.png").default.src} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
+                            )
+                        } else {
+                            return (
+                                <Image src={item} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
+                            )
+                        }
+                        
                     })
                 }
             </div>

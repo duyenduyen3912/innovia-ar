@@ -1,73 +1,103 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLoader, useFrame } from '@react-three/fiber';
 import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { Object3D, TextureLoader } from 'three';
-import * as THREE from "three";
-const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt }, ref) => {
-    const modelRef = useRef<Object3D>();
-    const scaleRef = useRef(1);
-    const gltf: GLTF = useLoader(GLTFLoader, modelUrl);
-    const boundingBox = new THREE.Box3(); 
- 
-    useEffect(() => {
-      const textureLoader = new TextureLoader();
-      const newTexture = textureLoader.load(textureUrl);
-      const darkerColor = new THREE.Color(0.2, 0.2, 0.2); // Điều chỉnh giá trị màu sắc tối hơn ở đây
-      gltf.scene.traverse((node) => {
-        if (!node.isMesh) return;
+import * as THREE from 'three';
+import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
 
-        if (node.material) {
+const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt, setGltfModel }, ref) => {
+  const modelRef = useRef<THREE.Object3D>();
+  const gltf: GLTF = useLoader(GLTFLoader, modelUrl);
+  const originalMaterialRef = useRef<THREE.Material | null>(null);
+  const [resetTexture, setResetTexture] = useState(false);
+  useEffect(() => {
+    const loadTextures = async () => {
+      const textureLoader = new THREE.TextureLoader();
+
+      // Load all textures asynchronously
+      const originalTexture =  textureUrl === "reset" && resetTexture === true ? originalMaterialRef.current.map : await textureLoader.loadAsync(textureUrl);
+      // Update materials after all textures are loaded
+      gltf.scene.traverse((node) => {
+        if (node.isMesh) {
+          const mesh = node as THREE.Mesh;
+          const originalMaterial = mesh.material as THREE.Material;
+          
+          const newTexture = originalTexture !== null  ? originalTexture : originalMaterial.map;
+          console.log(originalMaterial.map)
+          const darkerColor = new THREE.Color(0.5, 0.5, 0.5);
           const newMaterial = new THREE.MeshBasicMaterial({
             map: newTexture,
-            color: darkerColor, 
-            emissive: darkerColor
+            color: darkerColor,
+            emissive: darkerColor,
+            side: originalMaterial.side,
           });
-          newMaterial.opacity = node.material.opacity;
-          node.material = newMaterial;
-        } else {
-          node.material = new THREE.MeshBasicMaterial({
-            map: newTexture,
-            color: darkerColor, 
-            emissive: darkerColor
-          });
+
+          mesh.material = newMaterial;
         }
       });
-    }, [textureUrl]);
-    console.log("render")
-    const Mesh = () => {
-        useFrame(() => {
-            if (modelRef.current) {
-                modelRef.current.position.set(0, 0, 0); 
-                modelRef.current.scale.set(1, 1, 1);  
-            }
-            });
-        return (
-            <mesh ref={modelRef} > 
-                <primitive object={gltf.scene} /> 
-            </mesh>);
+
+      // Export the model once textures are loaded
+      const exporter = new GLTFExporter();
+      exporter.parse(gltf.scene, (gltfData) => {
+        const data = JSON.stringify(gltfData);
+        const blob = new Blob([data], { type: 'application/json' });
+
+        // Create a URL for the Blob and pass it to model-viewer
+        const blobUrl = URL.createObjectURL(blob);
+        setGltfModel(blobUrl);
+      }, { binary: true });
+    };
+
+    loadTextures();
+  }, [textureUrl, gltf, setGltfModel]);
+  useEffect(()=> {
+    if (resetTexture === false) {
+      gltf.scene.traverse((node) => {
+        if (node.isMesh) {
+          const mesh = node as THREE.Mesh;
+          const originalMaterial = mesh.material as THREE.Material;
+          if (originalMaterial) {
+            originalMaterialRef.current  = originalMaterial.clone();
+          }
+        }
+      });
+      setResetTexture(true);
     }
-    
+    const exporter = new GLTFExporter();
+      exporter.parse(gltf.scene, (gltfData) => {
+        const data = JSON.stringify(gltfData);
+        const blob = new Blob([data], { type: 'application/json' });
+
+        // Create a URL for the Blob and pass it to model-viewer
+        const blobUrl = URL.createObjectURL(blob);
+        setGltfModel(blobUrl);
+      }, { binary: true });
+  },[])
+  useFrame(() => {
+    if (modelRef.current) {
+      modelRef.current.position.set(0, 0, 0);
+      modelRef.current.scale.set(1, 1, 1);
+    }
+  });
+
+  const Mesh = () => {
     return (
-      <React.Fragment
-        style={{ backgroundColor: "#a39468", width: "100%", height: "100vh" }}
-        shadows
-        dpr={[1, 2]}
-      >
-        <color attach="background" args={["#b4dbd3"]} />
-          <Mesh />
-          
-          <perspectiveCamera position={modelPosition} lookAt={cameraLookAt} />
-        <mesh
-          rotation={[-Math.PI / 2, 0, 0]}
-          position={[0, -0.1, 0]}
-          receiveShadow
-        >
-          
-          <shadowMaterial attach="material" transparent opacity={0.3} />
-        </mesh>
-      </React.Fragment>
-        
+      <mesh ref={modelRef}>
+        <primitive object={gltf.scene} />
+      </mesh>
     );
+  };
+
+  return (
+    
+    <React.Fragment>
+      <color attach="background" args={['#f2ebd8']} />
+      <Mesh />
+      <perspectiveCamera position={modelPosition} lookAt={cameraLookAt} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
+        <shadowMaterial attach="material" transparent opacity={0.3} />
+      </mesh>
+    </React.Fragment>
+  );
 };
 
 export default React.forwardRef(Model);
