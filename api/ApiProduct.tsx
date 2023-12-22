@@ -90,25 +90,25 @@ export interface IDataRes {
 
 
 const path = {
-    getAllProduct: 'http://localhost:8080/products?page=',
-    getAllProductByCategory: 'http://localhost:8080/GetProductByCategory?category=',
-    getAllProductByCategoryRCM: 'http://localhost:8080/GetProductByCategoryRCM?category=',
-    searchAllProduct: 'http://localhost:8080/search?page=',
-    getProductID: 'http://localhost:8080/DProduct?id=',
-    getProductInCart: 'http://localhost:8080/selectCart',
-    getComment: 'http://localhost:8080/getReview?idproduct=',
-    getCategory: 'http://localhost:8080/Category',
-    addToCart : 'http://localhost:8080/addToCart',
-    addReview: 'http://localhost:8080/addReview',
-    checkReview: 'http://localhost:8080/checkReview?idproduct=',
-    deleteProductInCart: 'http://localhost:8080/deleteCart',
-    updateProductInCart: 'http://localhost:8080/updateCart',
-    order: 'http://localhost:8080/order',
-    getPopularProduct: 'http://localhost:8080/selectBestSellingProduct',
-    getOrderList: 'http://localhost:8080/selectOrderList',
-    getOrderItem: 'http://localhost:8080/selectOrderItem',
-    deleteOrderItem: 'http://localhost:8080/cancelOrder',
-    keywordRecommend: "http://localhost:8080/api/suggest-products?query="
+    getAllProduct: 'http://192.168.1.24:8080/products?page=',
+    getAllProductByCategory: 'http://192.168.1.24:8080/GetProductByCategory?category=',
+    getAllProductByCategoryRCM: 'http://192.168.1.24:8080/GetProductByCategoryRCM?category=',
+    searchAllProduct: 'http://192.168.1.24:8080/search?page=',
+    getProductID: 'http://192.168.1.24:8080/DProduct?id=',
+    getProductInCart: 'http://192.168.1.24:8080/selectCart',
+    getComment: 'http://192.168.1.24:8080/getReview?idproduct=',
+    getCategory: 'http://192.168.1.24:8080/Category',
+    addToCart : 'http://192.168.1.24:8080/addToCart',
+    addReview: 'http://192.168.1.24:8080/addReview',
+    checkReview: 'http://192.168.1.24:8080/checkReview?idproduct=',
+    deleteProductInCart: 'http://192.168.1.24:8080/deleteCart',
+    updateProductInCart: 'http://192.168.1.24:8080/updateCart',
+    order: 'http://192.168.1.24:8080/order',
+    getPopularProduct: 'http://192.168.1.24:8080/selectBestSellingProduct',
+    getOrderList: 'http://192.168.1.24:8080/selectOrderList',
+    getOrderItem: 'http://192.168.1.24:8080/selectOrderItem',
+    deleteOrderItem: 'http://192.168.1.24:8080/cancelOrder',
+    keywordRecommend: "http://192.168.1.24:8080/api/suggest-products?query="
 }
 
 

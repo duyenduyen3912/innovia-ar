@@ -131,7 +131,10 @@ function Header() {
             <Row className={cx("header-wrap")}>
                 <Col  xs={0} sm={0} md={0} lg={0} xl={10} xxl={10} className={cx("left")}>
                     <li className={cx("menu-item", "logo")}>
+                        <Link href={"/"} className={cx("menu-item-link")} tabIndex= {0}>
                         <Image src={require("../../assets/imgs/innovia-logo2.png").default.src} preview={false} width={100} alt="logo" />
+                        </Link>
+                        
                     </li>
                     <li className={cx("menu-item")} >
                         <Link href={"/"} className={cx("menu-item-link")} tabIndex= {0}>

@@ -119,6 +119,7 @@ export default function ProductDetail() {
                 console.log("ok")
         } 
     }, [data, checkOrder])
+    console.log(data?.data[0].model)
     return (
         <>
             <Head >
@@ -183,6 +184,7 @@ export default function ProductDetail() {
                         <div className={cx("infor-wrap")}>
                             <span className={cx("infor-title")}>Loại:</span>
                             <span className={cx("infor-text")}>{data?.data[0].tag}</span>
+                            <div>{data?.data[0].model}</div>
                         </div>
                     </div>
                     <div className={cx("product-intro")}>

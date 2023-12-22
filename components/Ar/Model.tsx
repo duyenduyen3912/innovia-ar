@@ -57,6 +57,7 @@ const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt, setGltfModel
           const originalMaterial = mesh.material as THREE.Material;
           if (originalMaterial) {
             originalMaterialRef.current  = originalMaterial.clone();
+            console.log("lưu texture")
           }
         }
       });
