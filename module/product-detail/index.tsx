@@ -301,7 +301,7 @@ export default function ProductDetail() {
                     open={isOpenModel} 
                     close={onCloseModal} 
                     name={data?.data[0].name} 
-                    modelUrl={data?.data[0].model}
+                    modelUrl={"https://chippisoft.com/models_product/banghe.glb"}
                     
                 />
             
