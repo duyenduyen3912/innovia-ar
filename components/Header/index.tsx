@@ -258,9 +258,9 @@ function Header() {
                 </div>
                 {rcm_list?.length !== 0 ? 
                 <div className={cx("keyword-rcm")} id="rcm-block">
-                    {rcm_list?.map((item) => {
+                    {rcm_list?.map((item, index) => {
                         return (
-                            <div className={cx("keyword")} onClick={() => handleSearch(item)}>
+                            <div key={index} className={cx("keyword")} onClick={() => handleSearch(item)}>
                                 {item}
                             </div>
                         )

@@ -142,9 +142,9 @@ export default function ProductDetail() {
                                  
                                     if (index != 0 && imageUrl != '') {
                                         return (
-                                            <Col className={`gutter-row ${cx("img-group-wrap")}`} span={8}>
+                                            <Col className={`gutter-row ${cx("img-group-wrap")}`} span={8} key={index}>
                                                 <ImageAnt
-                                                    key={index}
+                                                    
                                                     src={imageUrl}
                                                     width={'100%'}
                                                     className={cx("img-thumbnail")}

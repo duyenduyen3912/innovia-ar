@@ -2,7 +2,6 @@
 import React from 'react'
 import PageTitle from '../../components/PageTitle'
 import Head from 'next/head'
-import MenuType from '../../components/Menu'
 import image from '../../constant/img/image'
 import { Col, Row, Tabs, TabsProps } from 'antd'
 import classNames from 'classnames/bind'

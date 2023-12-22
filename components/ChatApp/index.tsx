@@ -102,9 +102,9 @@ export default function ChatApp() {
                         <div className={cx("message")}>Xin chào, chúng tôi có thể giúp gì cho bạn! Hãy chọn một vấn đề bạn quan tâm nhé!
                             <ul className={cx('chat-options')}>
                                 {
-                                    list_answer.map((item) => {
+                                    list_answer.map((item, index) => {
                                         return (
-                                             <li className={cx('chat-item')} onClick={() => handleSelectQuestion(item)}>
+                                             <li key={index} className={cx('chat-item')} onClick={() => handleSelectQuestion(item)}>
                                                 {item.question_name}
                                             </li>
                                         )
@@ -118,7 +118,7 @@ export default function ChatApp() {
                         chatList.map((item, index) => {
                             if(index !== 0)
                             return (
-                                <>
+                                <div key={index}>
                                 <div className={cx("user")}>
                                     <div className={cx("message")}>{item.question}</div>
                                 </div>
@@ -168,7 +168,7 @@ export default function ChatApp() {
                                             </ul>
                                         </div>
                                     </div>
-                                 </>
+                                 </div>
                             )
                         })
                         :

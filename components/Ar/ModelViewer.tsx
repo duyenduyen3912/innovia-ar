@@ -65,14 +65,14 @@ export default function ModelViewer({open, close, name, modelUrl}) {
             <div className={cx("texture")}>
                 <div style={{textAlign: 'end', marginBottom:'10px'}}>Đổi màu sản phẩm tại đây</div>
                 {
-                    texture.map((item) => {
+                    texture.map((item, index) => {
                         if(item === "reset") {
                             return (
-                                <Image src={require("../../assets/imgs/reset.png").default.src} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
+                                <Image key={index} src={require("../../assets/imgs/reset.png").default.src} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
                             )
                         } else {
                             return (
-                                <Image src={item} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
+                                <Image key={index} src={item} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
                             )
                         }
                         
