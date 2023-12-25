@@ -17,19 +17,28 @@ export default function ModelViewer({open, close, name, modelUrl}) {
     const [gltfModel, setGltfModel] = useState();
     const texture = [
         "reset",
-        "https://chippisoft.com/image/sofa3.jpg",
-        "https://chippisoft.com/image/sofa4.jpg",
-        "https://chippisoft.com/image/sofa5.jpg",
-        "https://chippisoft.com/image/sofa.jpg",
-        "https://chippisoft.com/image/go.jpg",
-        "https://chippisoft.com/image/go3.png",
-        "https://chippisoft.com/image/go4.png",
-        "https://chippisoft.com/image/go2.jpg",       
+        require("../../assets/imgs/sofa3.jpg"),
+        require("../../assets/imgs/sofa4.jpg"),
+        require("../../assets/imgs/sofa5.jpg"),
+        require("../../assets/imgs/sofa.jpg"),
+        require("../../assets/imgs/go.jpg"),
+        require("../../assets/imgs/go3.png"),
+        require("../../assets/imgs/go4.png"),
+        require("../../assets/imgs/go2.jpg"),   
+        // "https://chippisoft.com/image/sofa3.jpg",
+        // "https://chippisoft.com/image/sofa4.jpg",
+        // "https://chippisoft.com/image/sofa5.jpg",
+        // "https://chippisoft.com/image/sofa.jpg",
+        // "https://chippisoft.com/image/go.jpg",
+        // "https://chippisoft.com/image/go3.png",
+        // "https://chippisoft.com/image/go4.png",
+        // "https://chippisoft.com/image/go2.jpg",       
     ]
     const onSelectTexture = (textureSelected) => {
-        setTextureUrl(textureSelected)
+        if(textureSelected === "reset") setTextureUrl(textureSelected)
+        else setTextureUrl(textureSelected.default.src)
     }
-    
+    console.log(modelUrl)
   return (
     <Modal title={name} visible={open} onOk={close} onCancel={close} className={cx('model-viewer')} >
         <div style={{margin: '20px 0'}}>
@@ -72,7 +81,7 @@ export default function ModelViewer({open, close, name, modelUrl}) {
                             )
                         } else {
                             return (
-                                <Image key={index} src={item} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
+                                <Image key={index} src={item.default.src} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
                             )
                         }
                         

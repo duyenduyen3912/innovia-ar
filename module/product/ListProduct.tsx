@@ -111,7 +111,7 @@ export default function ListProduct() {
         <PageTitle name= {path.includes('list-product') ? 'Sản phẩm' : ''} />
           <div className={cx("product")}>
           <Row justify={'space-between'}>
-              <Col span={17} className="gutter-row">
+              <Col span={17} xs={24} md={24} lg={17} className="gutter-row">
               {
                 isLoading ? 
                 <div className={cx("loading")} >
@@ -219,7 +219,7 @@ export default function ListProduct() {
                 </>
                  } 
               </Col>
-              <Col span={6} className="gutter-row">
+              <Col span={6} xs={24} md={24} lg={6}className="gutter-row">
               
               <div className={cx('filter-price')}>
                 Lọc theo giá

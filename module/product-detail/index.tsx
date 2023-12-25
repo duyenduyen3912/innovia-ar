@@ -129,7 +129,7 @@ export default function ProductDetail() {
             </Head>
             <PageTitle img={image.length != 0 ? severImages[0] : ''}/>
             <Row justify={"center"} className={cx("product-detail")} gutter={80} >
-                <Col span={8} className="gutter-row">
+                <Col span={8} xs={24} lg={8} md={24} className="gutter-row">
                     <div className={cx("product-gallery")}>
 
                         <div className={cx("product-img-wrap")}>
@@ -162,7 +162,7 @@ export default function ProductDetail() {
 
 
                 </Col>
-                <Col span={8} className="gutter-row">
+                <Col span={8} xs={24} lg={8} md={24} className="gutter-row">
                     <div className={cx("product-name")}>
                         {data?.data[0].name}
                     </div>
@@ -184,7 +184,7 @@ export default function ProductDetail() {
                         <div className={cx("infor-wrap")}>
                             <span className={cx("infor-title")}>Loại:</span>
                             <span className={cx("infor-text")}>{data?.data[0].tag}</span>
-                            <div>{data?.data[0].model}</div>
+                            
                         </div>
                     </div>
                     <div className={cx("product-intro")}>
@@ -301,7 +301,7 @@ export default function ProductDetail() {
                     open={isOpenModel} 
                     close={onCloseModal} 
                     name={data?.data[0].name} 
-                    modelUrl={"https://chippisoft.com/models_product/banghe.glb"}
+                    modelUrl={data?.data[0].model}
                     
                 />
             

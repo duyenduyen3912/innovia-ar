@@ -16,13 +16,13 @@ const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt, setGltfModel
       // Load all textures asynchronously
       const originalTexture =  textureUrl === "reset" && resetTexture === true ? originalMaterialRef.current.map : await textureLoader.loadAsync(textureUrl);
       // Update materials after all textures are loaded
+      console.log(originalTexture)
       gltf.scene.traverse((node) => {
         if (node.isMesh) {
           const mesh = node as THREE.Mesh;
           const originalMaterial = mesh.material as THREE.Material;
-          
+      
           const newTexture = originalTexture !== null  ? originalTexture : originalMaterial.map;
-          console.log(originalMaterial.map)
           const darkerColor = new THREE.Color(0.5, 0.5, 0.5);
           const newMaterial = new THREE.MeshBasicMaterial({
             map: newTexture,
@@ -30,11 +30,11 @@ const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt, setGltfModel
             emissive: darkerColor,
             side: originalMaterial.side,
           });
-
+      
           mesh.material = newMaterial;
         }
       });
-
+      
       // Export the model once textures are loaded
       const exporter = new GLTFExporter();
       exporter.parse(gltf.scene, (gltfData) => {
@@ -44,6 +44,7 @@ const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt, setGltfModel
         // Create a URL for the Blob and pass it to model-viewer
         const blobUrl = URL.createObjectURL(blob);
         setGltfModel(blobUrl);
+        console.log(blobUrl)
       }, { binary: true });
     };
 
