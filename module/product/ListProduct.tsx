@@ -40,14 +40,14 @@ export default function ListProduct() {
   const handleChange = (value: string) => {
     setSortValue(value)
     if(value === 'low'){
-      const sortedLow = data?.data.sort((a, b) => a.price - b.price);
+      const sortedLow = data?.sort((a, b) => a.price - b.price);
       setProduct(sortedLow)
     } else if( value === 'high') {
-      const sortedHigh = data?.data.sort((a, b) => b.price - a.price);
+      const sortedHigh = data?.sort((a, b) => b.price - a.price);
       setProduct(sortedHigh)
     } else if (value === 'popularity'){
     } else if(value === 'rating'){
-      setProduct(data?.data)
+      setProduct(data)
     }
   };
 
@@ -61,9 +61,10 @@ export default function ListProduct() {
 
   const handleClickFilter = () => {
     const filterProduct = []
-    const filterPrice = data?.data.map((item, index) => {
+    const filterPrice = data?.map((item, index) => {
       if(item.price <= inputValue){
         filterProduct.push(item)
+    
       }
     })
     setProduct(filterProduct)

@@ -50,21 +50,21 @@ function Homepage() {
             cấp miễn phí các thiết kế nội thất và đồ nội thất phù hợp với nhu cầu của bạn
             </p>
             <Row gutter={16} style={{marginBottom: '16px', marginTop: "30px"}}>
-                <Col className="gutter-row" span={15}>
+                <Col className="gutter-row" xs={24} lg={15} md={24}>
                     <Card src={"livingroom"} name="Phòng khách"/>
                 </Col>
-                <Col className="gutter-row" span={9}>
+                <Col className="gutter-row" xs={24} lg={9} md={24}>
                     <Card src={"sleepingroom"} name="Phòng ngủ"/>
                 </Col>
             </Row>
             <Row gutter={16}>
-                <Col className="gutter-row" span={8}>
+                <Col className="gutter-row" xs={24} lg={8} md={24}>
                     <Card src={"officeroom"} name="Văn phòng"/>
                 </Col>
-                <Col className="gutter-row" span={8}>
+                <Col className="gutter-row" xs={24} lg={8} md={24}>
                     <Card src={"decor"} name="Trang trí nội thất"/>
                 </Col>
-                <Col className="gutter-row" span={8}>
+                <Col className="gutter-row" xs={24} lg={8} md={24}>
                     <Card src={"kitchenroom"} name="Phòng ăn"/>
                 </Col>
             </Row>
