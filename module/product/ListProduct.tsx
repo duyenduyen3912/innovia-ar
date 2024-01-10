@@ -44,7 +44,7 @@ export default function ListProduct() {
       setProduct(sortedLow)
     } else if( value === 'high') {
       const sortedHigh = data?.sort((a, b) => b.price - a.price);
-      setProduct(sortedHigh)
+      // setProduct(sortedHigh)
     } else if (value === 'popularity'){
     } else if(value === 'rating'){
       setProduct(data)
