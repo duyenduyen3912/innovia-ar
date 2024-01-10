@@ -24,16 +24,20 @@ export default function ModelViewer({open, close, name, modelUrl}) {
         require("../../assets/imgs/go.jpg"),
         require("../../assets/imgs/go3.png"),
         require("../../assets/imgs/go4.png"),
-        require("../../assets/imgs/go2.jpg"),   
-        // "https://chippisoft.com/image/sofa3.jpg",
-        // "https://chippisoft.com/image/sofa4.jpg",
-        // "https://chippisoft.com/image/sofa5.jpg",
-        // "https://chippisoft.com/image/sofa.jpg",
-        // "https://chippisoft.com/image/go.jpg",
-        // "https://chippisoft.com/image/go3.png",
-        // "https://chippisoft.com/image/go4.png",
-        // "https://chippisoft.com/image/go2.jpg",       
+        require("../../assets/imgs/go2.jpg"),         
     ]
+        // Kiểm tra xem thiết bị có phải là điện thoại hay không
+    function isMobileDevice() {
+        return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    }
+
+    // Sử dụng hàm isMobileDevice để kiểm tra
+    if (isMobileDevice()) {
+        console.log("Thiết bị là điện thoại.");
+    } else {
+        console.log("Thiết bị không phải là điện thoại.");
+    }
+
     const onSelectTexture = (textureSelected) => {
         if(textureSelected === "reset") setTextureUrl(textureSelected)
         else setTextureUrl(textureSelected.default.src)
@@ -72,21 +76,27 @@ export default function ModelViewer({open, close, name, modelUrl}) {
                 />
             </Canvas>
             <div className={cx("texture")}>
-                <div style={{textAlign: 'end', marginBottom:'10px'}}>Đổi màu sản phẩm tại đây</div>
                 {
-                    texture.map((item, index) => {
-                        if(item === "reset") {
-                            return (
-                                <Image key={index} src={require("../../assets/imgs/reset.png").default.src} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
-                            )
-                        } else {
-                            return (
-                                <Image key={index} src={item.default.src} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
-                            )
-                        }
-                        
-                    })
+                    isMobileDevice() ? null : 
+                    <>
+                        <div style={{textAlign: 'end', marginBottom:'10px'}}>Đổi màu sản phẩm tại đây</div>
+                    {
+                        texture.map((item, index) => {
+                            if(item === "reset") {
+                                return (
+                                    <Image key={index} src={require("../../assets/imgs/reset.png").default.src} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
+                                )
+                            } else {
+                                return (
+                                    <Image key={index} src={item.default.src} preview={false} className={cx("texture-img")} onClick={() => onSelectTexture(item)}/>
+                                )
+                            }
+                            
+                        })
+                    }
+                    </>
                 }
+                
             </div>
         </div>
     </Modal>

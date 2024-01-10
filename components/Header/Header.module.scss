@@ -313,7 +313,10 @@
             flex: 1;
         }
     }
-    
+    .header-wrap{
+        margin: 0 30px !important;
+        justify-content: space-between;
+    }
 
 }
 
@@ -321,7 +324,10 @@
     .menu-responsive{
         display: none !important;
     }
+   
 }
+
+
 
 
 

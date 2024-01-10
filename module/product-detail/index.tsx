@@ -128,8 +128,8 @@ export default function ProductDetail() {
                 <link rel="icon" href="/icon.png" />
             </Head>
             <PageTitle img={image.length != 0 ? severImages[0] : ''}/>
-            <Row justify={"center"} className={cx("product-detail")} gutter={80} >
-                <Col span={8} xs={24} lg={8} md={24} className="gutter-row">
+            <Row justify={"center"} className={cx("product-detail")} gutter={40} >
+                <Col  xs={24} lg={8} md={24} className="gutter-row">
                     <div className={cx("product-gallery")}>
 
                         <div className={cx("product-img-wrap")}>
@@ -162,7 +162,7 @@ export default function ProductDetail() {
 
 
                 </Col>
-                <Col span={8} xs={24} lg={8} md={24} className="gutter-row">
+                <Col  xs={24} lg={8} md={24} className="gutter-row">
                     <div className={cx("product-name")}>
                         {data?.name}
                     </div>

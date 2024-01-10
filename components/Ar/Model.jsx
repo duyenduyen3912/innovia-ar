@@ -19,7 +19,7 @@ const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt, setGltfModel
       const originalTexture = textureUrl === "reset" && resetTexture === true ? originalMaterialRef.current.map : await textureLoader.loadAsync(textureUrl);
 
       // Update materials after all textures are loaded
-      console.log(originalTexture);
+      // console.log(originalTexture);
       gltf.scene.traverse((node) => {
         if (node.isMesh) {
           const mesh = node;
@@ -46,6 +46,7 @@ const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt, setGltfModel
         // Create a URL for the Blob and pass it to model-viewer
         const blobUrl = URL.createObjectURL(blob);
         setGltfModel(blobUrl);
+        console.log("url model")
         console.log(blobUrl);
       }, { binary: true });
     };
@@ -61,7 +62,6 @@ const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt, setGltfModel
           const originalMaterial = mesh.material;
           if (originalMaterial) {
             originalMaterialRef.current = originalMaterial.clone();
-            console.log("lưu texture");
           }
         }
       });
