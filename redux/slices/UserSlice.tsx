@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IAccountInfo} from "../../type";
 
-const initialState: IAccountInfo = {id: null};
+const initialState: IAccountInfo = {id: null, fullname: null, email: null, phone: null};
 
 const UserSlice = createSlice({
   name: "user",
