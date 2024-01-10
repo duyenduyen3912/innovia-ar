@@ -90,29 +90,29 @@ export interface IDataRes {
 
 
 const path = {
-    getAllProduct: 'http://192.168.1.24:8080/products?page=',
-    getAllProductByCategory: 'http://192.168.1.24:8080/GetProductByCategory?category=',
-    getAllProductByCategoryRCM: 'http://192.168.1.24:8080/GetProductByCategoryRCM?category=',
-    searchAllProduct: 'http://192.168.1.24:8080/search?page=',
-    getProductID: 'http://192.168.1.24:8080/DProduct?id=',
-    getProductInCart: 'http://192.168.1.24:8080/selectCart',
-    getComment: 'http://192.168.1.24:8080/getReview?idproduct=',
-    getCategory: 'http://192.168.1.24:8080/Category',
-    addToCart : 'http://192.168.1.24:8080/addToCart',
-    addReview: 'http://192.168.1.24:8080/addReview',
-    checkReview: 'http://192.168.1.24:8080/checkReview?idproduct=',
-    deleteProductInCart: 'http://192.168.1.24:8080/deleteCart',
-    updateProductInCart: 'http://192.168.1.24:8080/updateCart',
-    order: 'http://192.168.1.24:8080/order',
-    getPopularProduct: 'http://192.168.1.24:8080/selectBestSellingProduct',
-    getOrderList: 'http://192.168.1.24:8080/selectOrderList',
-    getOrderItem: 'http://192.168.1.24:8080/selectOrderItem',
-    deleteOrderItem: 'http://192.168.1.24:8080/cancelOrder',
-    keywordRecommend: "http://192.168.1.24:8080/api/suggest-products?query="
+    getAllProduct: 'https://621ba522768a4e1020993c37.mockapi.io/api/products',
+    getAllProductByCategory: 'http://172.20.10.5:8080/GetProductByCategory?category=',
+    getAllProductByCategoryRCM: 'http://172.20.10.5:8080/GetProductByCategoryRCM?category=',
+    searchAllProduct: 'http://172.20.10.5:8080/search?page=',
+    getProductID: 'https://621ba522768a4e1020993c37.mockapi.io/api/products/',
+    getProductInCart: 'http://172.20.10.5:8080/selectCart',
+    getComment: 'http://172.20.10.5:8080/getReview?idproduct=',
+    getCategory: 'http://172.20.10.5:8080/Category',
+    addToCart : 'http://172.20.10.5:8080/addToCart',
+    addReview: 'http://172.20.10.5:8080/addReview',
+    checkReview: 'http://172.20.10.5:8080/checkReview?idproduct=',
+    deleteProductInCart: 'http://172.20.10.5:8080/deleteCart',
+    updateProductInCart: 'http://172.20.10.5:8080/updateCart',
+    order: 'http://172.20.10.5:8080/order',
+    getPopularProduct: 'http://172.20.10.5:8080/selectBestSellingProduct',
+    getOrderList: 'http://172.20.10.5:8080/selectOrderList',
+    getOrderItem: 'http://172.20.10.5:8080/selectOrderItem',
+    deleteOrderItem: 'http://172.20.10.5:8080/cancelOrder',
+    keywordRecommend: "http://172.20.10.5:8080/api/suggest-products?query="
 }
 
 
-export function getProductID(params: string): Promise<IProductItem> {
+export function getProductID(params: string): Promise<any> {
     return sendGet(path.getProductID + params)
 }
 
@@ -143,8 +143,8 @@ export function searchAllProduct(params, body) {
     })
 }
 
-export function getAllProduct(params) {
-    return sendGet(path.getAllProduct+params)
+export function getAllProduct() {
+    return sendGet(path.getAllProduct)
 }
 
 export function getOrderItem(params): Promise<any> {

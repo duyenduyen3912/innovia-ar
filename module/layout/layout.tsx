@@ -31,7 +31,7 @@ function Layout({children}) {
             </div>
             <div className={cx("footer")}>
                 <Footer />
-            </div>
+            </div> 
             <div className={cx("chat")}>
                 <ChatApp />
             </div>

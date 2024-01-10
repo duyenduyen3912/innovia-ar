@@ -44,6 +44,12 @@ function Header() {
         }
         
     }
+    const handleCloseMenu = () => {
+        if(isOpen){
+           setIsOpen(false) 
+           document.getElementById('menuResponsive').style.display = 'none'
+        } 
+    }
     const handleOpenSearch = () => {
         document.getElementById("search-input").classList.toggle(cx("open"))
     }
@@ -272,17 +278,17 @@ function Header() {
         <div className={`animate__animated animate__slideInDown ${cx('menu-responsive')}`} id="menuResponsive">
          <div className={cx('menu')}>
              <li className={cx('menu-responsive-item')}>
-                 <Link href={'/'} className={cx('menu-responsive-link')}>
+                 <Link href={'/'} className={cx('menu-responsive-link')} onClick={handleCloseMenu}>
                      Trang chủ
                  </Link>
              </li>
              <li className={cx('menu-responsive-item')}>
-                 <Link href={'/design'} className={cx('menu-responsive-link')}>
+                 <Link href={'/design'} className={cx('menu-responsive-link')} onClick={handleCloseMenu}>
                      Thiết kế
                  </Link>
              </li>
              <li className={cx('menu-responsive-item')}>
-                 <Link href={'/list-product'} className={cx('menu-responsive-link')}>
+                 <Link href={'/list-product'} className={cx('menu-responsive-link')} onClick={handleCloseMenu}>
                     Sản phẩm
                  </Link>
 
@@ -290,7 +296,7 @@ function Header() {
              
              
              <li className={cx('menu-responsive-item')}>
-                 <Link href={'/my-account'} className={cx('menu-responsive-link')}>
+                 <Link href={'/my-account'} className={cx('menu-responsive-link')} onClick={handleCloseMenu}>
                      Tài khoản
                  </Link>
              </li>

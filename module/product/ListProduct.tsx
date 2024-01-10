@@ -79,10 +79,10 @@ export default function ListProduct() {
     if(isRender === true && category !== "") {
       return getProductByCategory({category: category, page: 1})
     } else if(isRender === true && category === ""){
-      return getAllProduct(currentPage)
+      return getAllProduct()
     }
     if (path.includes('list-product')) {
-      return getAllProduct(currentPage);
+      return getAllProduct();
     } else {
       return searchAllProduct(currentPage, search);
     }
@@ -100,7 +100,7 @@ export default function ListProduct() {
     }
     
   }, [isRender])
-
+  console.log(data?.length)
   return (
     <>
          <Head >
@@ -122,9 +122,9 @@ export default function ListProduct() {
                 
                 <div className={cx("sort")}>
                       <div className={cx("product-number")}>
-                        {
-                          data?.total_products != 0 ? `Hiển thị ${(parseInt(currentPage,10) - 1) * 9 + 0 + 1} – ${(parseInt(currentPage,10) - 1) * 9 + (data?.data.length) -1 + 1} của ${data?.total_products}  kết quả` : "Không có sản phẩm cần tìm"
-                        }
+                        {/* {
+                          data?.length != 0 ? `Hiển thị ${(parseInt(currentPage,10) - 1) * 9 + 0 + 1} – ${(parseInt(currentPage,10) - 1) * 9 + (data?.data.length) -1 + 1} của ${data?.length}  kết quả` : "Không có sản phẩm cần tìm"
+                        } */}
                             
                       </div>
                       
@@ -145,9 +145,9 @@ export default function ListProduct() {
                       </Space>
                 </div>
                 <Row className={cx("row-product")} gutter={16}>
-                  { data?.total_products != 0 ? 
+                  { data?.length != 0 ? 
                     <>
-                    {data?.data.map((item, index) => (
+                    {data?.map((item, index) => (
                       <>
                       <Product 
                         key={item.id} 
@@ -169,7 +169,7 @@ export default function ListProduct() {
                       ))}
                       <Pagination
                         current={parseInt(currentPage,10)}
-                        total={data?.total_products} 
+                        total={data?.length} 
                         pageSize={9}
                         onChange={handlePageChange}
                         className={cx("pagination")}
