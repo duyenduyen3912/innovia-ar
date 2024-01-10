@@ -6,7 +6,7 @@ import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
 
 const Model = ({ modelUrl, textureUrl, modelPosition, cameraLookAt, setGltfModel }, ref) => {
   const modelRef = useRef();
-  const gltf = Array.isArray(useLoader(GLTFLoader, modelUrl)) ? useLoader(GLTFLoader, modelUrl)[0] : useLoader(GLTFLoader, modelUrl);
+  const gltf = useLoader(GLTFLoader, modelUrl);
 
   const originalMaterialRef = useRef(null);
   const [resetTexture, setResetTexture] = useState(false);
