@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/Ar/ArView.jsx"  ],
+, "components/Ar/ArView.jsx", "components/Ar/Model.jsx"  ],
   "exclude": [
     "node_modules"
   ]

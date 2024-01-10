@@ -13,25 +13,9 @@ import { TrophyOutlined } from "@ant-design/icons";
 const cx = classNames.bind(style)  
 
 function Homepage() {
-    const inView = true;
-    const [juice, setJuice] = useState([])
-    const [food, setFood] = useState([])
-    const { isLoading, data } = useQuery(['getAllProduct' ],() =>  getAllProduct() )
    
 
-    useEffect(()=>{
-        data?.data.map((item, index) => {
-            
-            if(item.tag.includes("Juice")) {
-                setJuice((prev) => [...prev, item])
-                
-            } else if(item.tag.includes("Food")){
-                setFood((prev) => [...prev, item])
-            }
-        })
-       
-    },[data])
- 
+   
     return (
        
        <div className={cx("homepage")}>
