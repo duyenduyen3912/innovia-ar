@@ -157,9 +157,9 @@ export default function ChatApp() {
                                         <div className={cx("message")}>Hãy chọn vấn đề bạn quan tâm nhé!
                                             <ul className={cx('chat-options')}>
                                                 {
-                                                    list_answer.map((item) => {
+                                                    list_answer.map((item, index) => {
                                                         return (
-                                                            <li className={cx('chat-item')} onClick={() => handleSelectQuestion(item)}>
+                                                            <li className={cx('chat-item')} onClick={() => handleSelectQuestion(item)} key={index}>
                                                                 {item.question_name}
                                                             </li>
                                                         )
