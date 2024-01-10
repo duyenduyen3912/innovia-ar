@@ -55,7 +55,7 @@ export default function ModelViewer({open, close, name, modelUrl}) {
                 id="canvas"
                 style={{ width: '100%', height: '100%' }}
                 pixelRatio={window.devicePixelRatio}
-                gl={{ pixelRatio: window.devicePixelRatio, forceResize: true, antialias: true, alpha: true}}
+                gl={{forceResize: true, antialias: true, alpha: true}}
                 >
             <ambientLight intensity={1.0} />
             <pointLight position={[0, 4, 6]} castShadow />

@@ -16,7 +16,7 @@ function Homepage() {
     const inView = true;
     const [juice, setJuice] = useState([])
     const [food, setFood] = useState([])
-    const { isLoading, data } = useQuery(['getAllProduct' ],() =>  getAllProduct('1') )
+    const { isLoading, data } = useQuery(['getAllProduct' ],() =>  getAllProduct() )
    
 
     useEffect(()=>{
